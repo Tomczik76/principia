@@ -20,9 +20,8 @@ line enters only by displacing one.
   "only X does this", "none of the M cases" — paste the count or do not write the
   sentence. Measured bias: false claims overstate reach; they do not understate it.
 - **Design it twice.** Sketch two genuinely different decompositions before committing —
-  you cannot state the tradeoff of an alternative you never generated. For changes to
-  existing code, the ideal: end up where you would have, building from scratch knowing
-  what you know now.
+  you cannot state the tradeoff of an alternative you never generated. For existing code,
+  the ideal: end up where a from-scratch build, knowing what you know now, would land.
 - **Spend top-down authority on the least important decisions.** Enforce the style guide
   strictly precisely *because* style is unimportant — it kills relitigation. Save the
   arguing for decisions that matter.
@@ -39,19 +38,21 @@ line enters only by displacing one.
   that owns it: a stored reference is a real foreign key with a cascade decision, never a
   bare id the app resolves defensively. Where the constraint can't reach, enforcement
   lives in the one transaction that makes the change — never as compensating filters
-  spread across readers.
+  spread across readers. But a transaction is not a lock: at default isolation two
+  check-then-act transactions do not see each other, so an invariant spanning rows the
+  write doesn't touch (uniqueness, a reference under delete, "at least one left") needs
+  the database — a constraint or `FOR UPDATE`; the racing check only shrinks the window.
 - **One canonical representation; derive the rest.** Two parallel forms needing manual
   sync = every edit is a drift bug and the sync function is the bug surface. A layering
   chain where each hop RE-LISTS the fields it forwards is the same defect at N-fold: one
   datum in N representations, and the hop list is the sync function. Refuse to build a
   layer that cannot state what it hides.
 - **Know when a change leaves the ACID island.** A system is centralized while its whole
-  state updates atomically; it is distributed the moment one call mutates state the
-  transaction cannot reach — and every external API call IS a state mutation somewhere.
-  Prefer designs that stay inside the island. A crossing is a design-time commitment: the
-  process can die between the DB write and the external effect, so the transaction records
-  intent first, and the seam gets an idempotency key, a ledger row, or
-  persist-result-then-process.
+  state updates atomically; distributed the moment one call mutates state the transaction
+  cannot reach — and every external API call IS a state mutation somewhere. Prefer designs
+  that stay inside. A crossing is a design-time commitment: the process can die between
+  the DB write and the external effect, so the transaction records intent first, and the
+  seam gets an idempotency key, a ledger row, or persist-result-then-process.
 
 ## Boundaries
 
@@ -62,10 +63,9 @@ line enters only by displacing one.
   platforms — twins kept honest by parity tests, whose jurisdiction is divergence between
   them, never correctness), and everything routes through it. A defensive check deep in
   the interior is a diagnostic that the boundary failed to parse; the fix direction is
-  always upward. When the invariant won't fit in a type, use a smart constructor over an
-  opaque type, so the only way to obtain the value is through the parse. Caveats: not
-  every invariant merits type-level encoding, complex input can need multi-pass parsing,
-  and authorization may legitimately precede parsing.
+  always upward. When the invariant won't fit in a type, a smart constructor over an
+  opaque type makes the parse the only source of the value. Caveats: not every invariant
+  merits a type; complex input can need several passes; authorization may precede parsing.
 - **Detonate as late as possible.** Keep the symbolic, structured, exact representation as
   long as you can; go lossy — strings, doubles, rendered output, executed effects — as the
   last step. A small language embeds into a larger one later; the reverse leaks.

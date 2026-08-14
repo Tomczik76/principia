@@ -24,10 +24,27 @@
    sequences against a state-machine model, race detection. Admit when a stateful-PBT
    case study earns it.
 
+## Reversed rejections (kept visible so the failure mode stays priced)
+
+- **Hickey, "The Value of Values"** (JaxConf 2012) — rejected as "covered by core's
+  least-power/immutability defaults," reopened and digested 2026-08-14 as
+  `canon/value-of-values.md`. The rejection was wrong twice over, both times by this
+  repo's own rules: it was written from memory of the talk rather than the transcript
+  (METHOD rule 1), and it asserted coverage without printing a count (the measurement
+  rule). Measured at reopening: `immutab` occurs **0** times in `core.md` and **1** time
+  in the whole tracked corpus — in the rejection sentence itself. The delta the transcript
+  actually carried: the PLOP detector (new information replacing old), fact-log vs.
+  current-state store, policies-don't-compose-but-values-do, and the fabrication
+  precondition under property-based testing.
+  **Lesson for future triage: a rejection is a reach claim and pays the same evidence
+  toll as an admission.** Rejecting a source unread is cheaper than digesting it and
+  looks identical afterward.
+
 ## Rejected as redundant (do not re-litigate without new evidence)
 
-- **Hickey, "The Value of Values" / "Hammock Driven Development"** — covered by core's
-  least-power/immutability defaults and its red-check-first testing rule respectively.
+- **Hickey, "Hammock Driven Development"** — covered by core's red-check-first testing
+  rule and its design-it-twice discipline. (Rejection unread; see the reversal above for
+  what that is worth. Re-check against the transcript before relying on it.)
 - **Yaron Minsky, "Effective ML"** — origin of "make illegal states unrepresentable";
   the rule is already in core with paid-for evidence in the ledger.
 - **Richard Feldman, "Making Impossible States Impossible"** — same rule, Elm-shaped.

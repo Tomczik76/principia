@@ -48,5 +48,5 @@ only on the local machine. The canon cites every source by URL; `transcripts/SOU
 
 Hickey, *Simple Made Easy* · Bjarnason, *Constraints Liberate, Liberties Constrain* ·
 King, *Parse, Don't Validate* · Ousterhout, *A Philosophy of Software Design* · Metz,
-*The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* · De Goes (ACID-island
-distillate only).
+*The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* · Hughes, *How to
+Specify It!* · De Goes (ACID-island distillate only).

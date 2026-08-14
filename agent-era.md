@@ -61,6 +61,10 @@ be the counterweight: to make the simple path the easy path by putting it in con
 
 - Every rule that produces **oracles** (types, parsers, baselines, e2e arbiters) outranks
   every rule that produces elegance. Verification is the bottleneck.
+- **Prefer properties over examples for agent-written code.** Hughes's warning that
+  implementation misconceptions replicate into test code (`canon/how-to-specify-it.md`)
+  becomes automatic when one model writes both sides; a property plus a generator
+  decorrelates verification from generation.
 - **Schedule the Metz exit.** Wrong abstractions are no longer permanent debt; an agent
   pass can re-inline and re-derive. Tangle-unwinding is maintenance, not archaeology.
 - **Design it N times** with a judge, not twice by hand.

@@ -77,14 +77,20 @@ story in two or three sentences, the principle it evidences, where the full reco
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.
   → *DRY-for-facts applies to docs; anchors need the same review as code.*
 
-## IOUs — core rules awaiting a paid-for anchor
+## IOUs — rules awaiting a paid-for anchor
 
 Admitted on source authority; the ledger owes them evidence. Printed here so the debt
 cannot go invisible (the `@wip`-count pattern applied to this repo). When a project pays
-for one of these, replace the IOU with the entry.
+for one of these, replace the IOU with the entry. Covers both `core.md` rules and canon
+bullets that ride on a source's own measurements.
 
 - Name the axis (the simple/easy distinction itself — its two corollaries have entries).
 - Design it twice / the from-scratch ideal.
 - Spend top-down authority on the least important decisions.
 - Define errors out of existence.
 - Explicit beats implicit.
+- Test your tests: generator and shrinker validity properties (Hughes).
+- Measure the test-data distribution; a generator that cannot reach the interesting case
+  makes every property it feeds vacuous (Hughes).
+- Equivalence, not structural equality, as the exported equality of an abstract type
+  (Hughes).

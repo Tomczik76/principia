@@ -42,5 +42,11 @@
   real dependencies.
 - **Moseley & Marks, "Out of the Tar Pit"** — the ancestor of half the corpus; reading it
   after Hickey is re-derivation.
+- **Wlaschin, "Designing with Types: Making Illegal States Unrepresentable"** — the
+  slogan and its worked refactoring (record-of-optionals → union of legal states) are
+  already core rules; the one genuinely additive part, the *counting procedure*, was
+  absorbed into core's invalid-states bullet rather than given a canon file. His
+  property-pattern taxonomy (roundtrip, oracle, idempotence) is likewise covered by the
+  five styles in `canon/how-to-specify-it.md`.
 - **Raft/Paxos/CAP internals** — vocabulary without decisions for effectively-centralized
   systems that do not operate a distributed database.

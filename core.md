@@ -29,8 +29,12 @@ line enters only by displacing one.
 
 ## Shapes of data
 
-- **Make invalid states unrepresentable.** Types enforce invariants at compile time;
-  runtime validation is the fallback, not the plan.
+- **Make invalid states unrepresentable.** The procedure: count the states the rule
+  permits, then give the type exactly that many inhabitants. A record of optional fields
+  plus a prose rule ("at least one of these must be present") is the smell — the optional
+  encoding always admits a state the rule forbids; replace it with one case per legal
+  combination, and exhaustive matching drags every consumer along. Where types cannot
+  reach, the same move one layer down is a `CHECK (num_nonnulls(a, b, c) = 1)`.
 - **Make broken data unreachable, not merely handled.** Enforce an invariant in the layer
   that owns it: a stored reference is a real foreign key with a cascade decision, never a
   bare id the app resolves defensively. Where the constraint can't reach, enforcement

@@ -28,7 +28,10 @@ the naive solution (recompute the expected result in the test):
    call"; found by asking "what should be True after calling f?". When the postcondition
    for one function would require reimplementing it (find's would), use his trick:
    *construct a test case whose outcome is easy to predict* — `find k (insert k v t) ===
-   Just v` needs no oracle because the setup call created the fact being checked.
+   Just v` needs no oracle because the setup call created the fact being checked. The
+   trick carries the same reachability debt as induction below: it only tests the values
+   your construction can express, so pair it with a completeness property (his
+   `prop_InsertDeleteComplete`: every tree is reachable as an insert or a delete).
 3. **Metamorphic** — "related calls return related results." When you cannot predict one
    result, you can still state how *changing the input* changes the output:
    `insert k v (insert k' v' t) ≃ insert k' v' (insert k v t)` (with a case split for

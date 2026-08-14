@@ -113,3 +113,14 @@ bullets that ride on a source's own measurements.
   makes every property it feeds vacuous (Hughes).
 - Equivalence, not structural equality, as the exported equality of an abstract type
   (Hughes).
+- Ask what an update destroys — accrete the fact, project the current view (Hickey, *The
+  Value of Values*). Awaiting a defect where a question needed a second time point and the
+  system had overwritten it. Held out of `core.md` for lack of both an anchor and a
+  displacement; the candidate line is drafted in `canon/value-of-values.md`.
+- Policies don't compose but values do — a locking or cloning protocol is interface, and
+  it is the part of the interface that evaporates under composition (Hickey). Awaiting a
+  defect paid at a composite, not at a leaf.
+- Fabrication cost as the precondition on preferring properties: a generator for a
+  place-shaped API is mostly setup code that rebuilds a world, so the property certifies
+  the fixture too (Hickey, sharpening Hughes). Awaiting a case where generator setup cost,
+  not property design, was what blocked PBT adoption.

@@ -40,14 +40,17 @@ a project pays for a new lesson, contribute the anchor back to `case-studies.md`
 ## Publishing note
 
 `transcripts/` holds archived talk transcripts for local reference — they are other
-people's intellectual property, so the directory is untracked (`.gitignore`) and exists
-only on the local machine. The canon cites each source by URL where a public one exists
-(and by venue otherwise); `transcripts/SOURCES.md` (local) maps archive filenames to
-their origins.
+people's intellectual property, so the archive contents are untracked (`.gitignore`).
+What IS tracked is the provenance: `transcripts/MANIFEST.md` (origin + SHA-256 per file)
+and `transcripts/fetch.sh`, which re-downloads what has a stable upstream and verifies
+everything present. Files with no stable upstream live in a private mirror
+(`Tomczik76/principia-transcripts`). The canon cites each source by URL where a public
+one exists (and by venue otherwise); `transcripts/SOURCES.md` (archived, mirrored) maps
+archive filenames to their origins.
 
 ## Current sources
 
-Hickey, *Simple Made Easy* · Bjarnason, *Constraints Liberate, Liberties Constrain* +
-*Composing Programs* · King, *Parse, Don't Validate* · Ousterhout, *A Philosophy of
-Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* ·
-Hughes, *How to Specify It!* · De Goes (ACID-island distillate only).
+Hickey, *Simple Made Easy* + *The Value of Values* · Bjarnason, *Constraints Liberate,
+Liberties Constrain* + *Composing Programs* · King, *Parse, Don't Validate* · Ousterhout,
+*A Philosophy of Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal
+API Surface Area* · Hughes, *How to Specify It!* · De Goes (ACID-island distillate only).

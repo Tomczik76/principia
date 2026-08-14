@@ -1,1 +1,5 @@
-transcripts/
+# The transcript archive is other people's IP and stays off the public repo
+# (see README publishing note). Only its provenance is tracked.
+transcripts/*
+!transcripts/MANIFEST.md
+!transcripts/fetch.sh

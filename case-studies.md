@@ -27,8 +27,13 @@ story in two or three sentences, the principle it evidences, where the full reco
 - **The `persistence` prop.** Editor-content ownership used to be inferred from four
   optional falsy-by-default booleans; a mount that set none of them silently owned (and
   clobbered) the user's sandbox save. Replaced by one required, non-defaulted enum prop.
-  → *caller-identity flags as degradation signature; required parameter beats wrong
-  default; make invalid states unrepresentable.*
+  The failure is the explicit/implicit asymmetry priced in user data: ownership was
+  wired implicitly, so when it went wrong there was no call site to read — and the fix
+  was not sugar over the inference but deleting it, because implicit cannot be undone
+  cleanly. Four optional booleans also make 16 representable states for ~3 legal ones.
+  → *explicit beats implicit; caller-identity flags as degradation signature; required
+  parameter beats wrong default; count the legal states (make invalid states
+  unrepresentable).*
 - **The beats/voices duality.** One score held as a merged grid AND per-voice tracks,
   synced by patch logic; drift on irregular sub-beat onsets produced
   "clicked here, appeared there" bugs through several rounds of sync-helper fixes before
@@ -72,6 +77,17 @@ story in two or three sentences, the principle it evidences, where the full reco
   instructions file is code; it drifts like code and must be reviewed like code.
   → *measurement rule (recursive); surface accounting (recursive); fact duplication
   drifts (three-copy story had already diverged in wording).*
+- **The twins that only agreed on examples (2026-08-14).** An adversarial review of the
+  corpus's own PBT digest found it describing the per-platform parser twins as a
+  cross-implementation oracle. They were not: each side asserted against its own
+  hand-written examples, nothing ran one implementation against the other, and the Scala
+  suite the frontend comment named did not exist. Fixed by enumerating the *entire*
+  wire-legal domain (7,140 rows) into a committed fixture the Scala suite pins and the TS
+  test replays — sampling was unnecessary because the domain is small, which removes the
+  generator-distribution problem outright. Confirmed to bite by mutation: three deliberate
+  breaks of the TS twin were each caught. → *one parser per boundary (the per-platform
+  variant); guards must fail when they cannot find their anchor; a passing guard proves
+  nothing until you have watched it fail; parity certifies agreement, never correctness.*
 - **The dead identifier.** The instructions file directed edits at
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.
@@ -88,7 +104,6 @@ bullets that ride on a source's own measurements.
 - Design it twice / the from-scratch ideal.
 - Spend top-down authority on the least important decisions.
 - Define errors out of existence.
-- Explicit beats implicit.
 - Test your tests: generator and shrinker validity properties (Hughes).
 - Measure the test-data distribution; a generator that cannot reach the interesting case
   makes every property it feeds vacuous (Hughes).

@@ -55,9 +55,13 @@ line enters only by displacing one.
   `Unit`/`Boolean`); a parser returns a refined type that carries it, so the check can
   never need repeating. Given a partial function, strengthen the argument type rather than
   weaken the return type. One parser per boundary (per platform, if a boundary spans
-  platforms — twins kept honest by parity tests), and everything routes through it. A
-  defensive check deep in the interior is a diagnostic that the boundary failed to parse;
-  the fix direction is always upward.
+  platforms — twins kept honest by parity tests, whose jurisdiction is divergence between
+  them, never correctness), and everything routes through it. A defensive check deep in
+  the interior is a diagnostic that the boundary failed to parse; the fix direction is
+  always upward. When the invariant won't fit in a type, use a smart constructor over an
+  opaque type, so the only way to obtain the value is through the parse. Caveats: not
+  every invariant merits type-level encoding, complex input can need multi-pass parsing,
+  and authorization may legitimately precede parsing.
 - **Detonate as late as possible.** Keep the symbolic, structured, exact representation as
   long as you can; go lossy — strings, doubles, rendered output, executed effects — as the
   last step. A small language embeds into a larger one later; the reverse leaks.
@@ -69,7 +73,11 @@ line enters only by displacing one.
 
 - **Modules should be deep.** A module's worth is functionality per unit of interface,
   where *interface* is everything a caller must hold in mind — side effects, dependencies,
-  ordering — not just signatures. Few meaty layers beat many skinny ones.
+  ordering — not just signatures. Few meaty layers beat many skinny ones. Design the
+  interface for what the mechanism does, not for the one current caller's quirks: slightly
+  general-purpose is usually simpler *and* deeper. When arguing about a design, reach for
+  the countable symptom — *change amplification* (one change, many sites) over *cognitive
+  load* or *unknown unknowns*.
 - **Reach for the least powerful construct that says exactly what you mean.** Each rung up
   the power ladder (`map` → fold → recursion → local mutation → shared state) buys
   capability and spends what a caller can conclude from the signature alone. Narrow what a
@@ -86,7 +94,12 @@ line enters only by displacing one.
 - **DRY is for facts; patterns wait for bugs.** The same knowledge stated twice — a
   formula, a scoring rule, an encoding — is a queued drift bug: extract immediately.
   Similar-shaped code serving different concerns is extracted only when the repetition
-  demonstrably causes bugs. Degradation signature of a wrong abstraction: a parameter
+  demonstrably causes bugs. The gate governs *convenience* abstractions only:
+  invariant-enforcing structure (opaque types, parsers, foreign keys, sealed ADTs) is
+  admitted on the bug class it makes unrepresentable — that is the gate passing, not an
+  exception. And separating two concerns usually produces MORE files: DRY is one *fact*
+  in one place, not one *concern* per artifact, and the two point opposite ways when a
+  shared helper serves callers entangled for different reasons. Degradation signature of a wrong abstraction: a parameter
   whose job is to tell the helper which caller is calling. The exit is re-inlining —
   inline into every call site, delete each site's untaken branches, extract only what
   survived everywhere (sometimes nothing; that outcome is fine).
@@ -105,7 +118,14 @@ line enters only by displacing one.
 - **Test the seam, not the two ends.** A test arbitrating whether a value reached its
   consumer must call the production entry point, never rebuild the computation.
 - **A test that has never run is worse than an absent one** — it occupies the slot where
-  real coverage would go. A guard that cannot find its anchor must fail, not pass.
+  real coverage would go. A guard that cannot find its anchor must fail, not pass, and a
+  generator that cannot reach the interesting case makes every property it feeds vacuous.
+- **Prefer properties to examples where structure exists.** An example written beside the
+  implementation replicates its misconceptions; a property plus a generator states the
+  check independently of the code's shape. Reach for a model-based property when a simple
+  abstract model exists (measured strongest), metamorphic relations when it does not;
+  validity invariants alone are weak. Jurisdiction: a property certifies the artifact,
+  never the wiring — arrival is the e2e check's job.
 - **Guardrails do not tell you which way to go.** A passing suite says nothing broke,
   never that the shape is right. Reach for a structural fix when the failure is
   structural; more tests around a tangle measure the tangle.

@@ -37,8 +37,11 @@ Consequences:
 This distillate is deliberately small. The deeper treatment of the same territory is
 queued (see `../QUEUE.md`): Helland's "Life Beyond Distributed Transactions" generalizes
 the crossing discipline into a design method (entities, at-most-once messaging,
-idempotency as a first-class input), and Kleppmann/Bailis cover the gap this file does not
-address — two *concurrent* transactions racing inside the island under weak isolation.
+idempotency as a first-class input). The gap this file does not address — two *concurrent*
+transactions racing inside the island under weak isolation — is covered by
+`feral-concurrency-control.md`, whose Kleppmann half also re-derives this file's territory
+independently from the failure side (compensating transactions = app-level atomicity,
+apologies = app-level consistency).
 
 ## Evidence
 

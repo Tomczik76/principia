@@ -92,6 +92,22 @@ story in two or three sentences, the principle it evidences, where the full reco
   breaks of the TS twin were each caught. → *one parser per boundary (the per-platform
   variant); guards must fail when they cannot find their anchor; a passing guard proves
   nothing until you have watched it fail; parity certifies agreement, never correctness.*
+- **The double award (2026-07-27).** Community-vote toggles minted duplicate
+  `point_events`: the app-level "already awarded?" check ran inside a transaction and
+  still raced, and the inflated totals reached production (the fix migration leaves them
+  in place, and says so). Fixed twice in one day — votes, then exercise republish — each
+  time by a partial unique index whose header states the rule: the in-transaction check
+  keeps a repeat graceful; "this index is what makes a double award impossible rather
+  than merely unlikely." → *a transaction is not a lock; constraint as enforcement,
+  racing check as UX.*
+- **The quota twins.** One cap shape, two implementations: the audio-track cap locks the
+  owner row (`FOR UPDATE`) and makes the INSERT itself conditional, demoting its own
+  pre-check in writing to "an OPTIMISATION, not the enforcement" — while the free-tier
+  project cap remains a count in one session followed by an unconditional INSERT in
+  another, with no database backstop. The correct answer sits in a sibling file, written
+  later, by an author who spelled out why the other shape cannot work. → *a transaction
+  is not a lock; the racing check only shrinks the window; siblings diverge without
+  cross-session memory.*
 - **The dead identifier.** The instructions file directed edits at
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.

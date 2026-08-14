@@ -50,4 +50,6 @@ their origins.
 Hickey, *Simple Made Easy* · Bjarnason, *Constraints Liberate, Liberties Constrain* +
 *Composing Programs* · King, *Parse, Don't Validate* · Ousterhout, *A Philosophy of
 Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* ·
-Hughes, *How to Specify It!* · De Goes (ACID-island distillate only).
+Hughes, *How to Specify It!* · De Goes (ACID-island distillate only) · Bailis et al.,
+*Feral Concurrency Control* + Kleppmann, *Transactions: Myths, Surprises and
+Opportunities*.

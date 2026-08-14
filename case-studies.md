@@ -45,9 +45,13 @@ story in two or three sentences, the principle it evidences, where the full reco
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
   durations; an atom with zero notes is unconstructible so no consumer defends against
-  it; the pitch primitive is obtainable only through its smart constructor. The frontend's
+  it; the pitch primitive is obtainable only through its smart constructor, and its
+  algebraic laws are locked as ScalaCheck properties in `PitchPropertySuite` (including
+  one genuine homomorphism shape: `Note.toPitch preserves midi`). The frontend's
   Effect-based architecture is the same detonate-late rule applied to side effects — an
-  Effect stays a description until the run boundary. → *detonate late; strengthen the
+  Effect stays a description until the run boundary, and its SSE pipeline (`sseAsk.ts`:
+  source → framing → decode, each stage meaningful over any stream) is the
+  compositional-pipeline shape live. → *detonate late; strengthen the
   argument type; smart constructor over opaque type; least-powerful construct.*
 - **`share_images.source_id`.** A polymorphic reference with no foreign key: the app
   resolved and filtered defensively, and the gap shipped — a share-preview card happily

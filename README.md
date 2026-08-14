@@ -41,12 +41,13 @@ a project pays for a new lesson, contribute the anchor back to `case-studies.md`
 
 `transcripts/` holds archived talk transcripts for local reference — they are other
 people's intellectual property, so the directory is untracked (`.gitignore`) and exists
-only on the local machine. The canon cites every source by URL; `transcripts/SOURCES.md`
-(local) maps archive filenames to their origins.
+only on the local machine. The canon cites each source by URL where a public one exists
+(and by venue otherwise); `transcripts/SOURCES.md` (local) maps archive filenames to
+their origins.
 
 ## Current sources
 
-Hickey, *Simple Made Easy* · Bjarnason, *Constraints Liberate, Liberties Constrain* ·
-King, *Parse, Don't Validate* · Ousterhout, *A Philosophy of Software Design* · Metz,
-*The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* · Hughes, *How to
-Specify It!* · De Goes (ACID-island distillate only).
+Hickey, *Simple Made Easy* · Bjarnason, *Constraints Liberate, Liberties Constrain* +
+*Composing Programs* · King, *Parse, Don't Validate* · Ousterhout, *A Philosophy of
+Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal API Surface Area* ·
+Hughes, *How to Specify It!* · De Goes (ACID-island distillate only).

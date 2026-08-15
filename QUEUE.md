@@ -23,6 +23,20 @@
    (`canon/how-to-specify-it.md` is scoped to pure functions by design): operation
    sequences against a state-machine model, race detection. Admit when a stateful-PBT
    case study earns it.
+6. **Noel Welsh — *Functional Programming Strategies in Scala with Cats*, the
+   data/codata and interpreter chapters.** The initial/final distinction as data vs
+   codata, in Scala 3 specifically — the book-excerpt companion to
+   `canon/tagless-final.md` (Kiselyov is Haskell/OCaml-centric; Welsh speaks the
+   consuming projects' language). Sources need not be talks: book excerpts, blog
+   posts from lesser-known wizards, and treatises qualify on the same terms —
+   primary text, delta only, paid-for anchor. The Contrapunctus rule-DSL bake-off
+   (2026-08-14) already provides the anchor; admit on the next digestion pass.
+7. **Fabio Labella (SystemFw) — the effect-systems treatises** ("the case for effect
+   systems"; the shared-state-in-FP talks/gists). The strongest lesser-known-Scala-
+   wizard material on WHY suspension buys compositionality — would deepen the
+   Effect.ts/cats-effect side of `constraints-liberate.md`'s detonate-late rule.
+   Admit with an effect-seam case study (the Contrapunctus backend TF seam, when
+   built, is the natural anchor).
 
 ## Reversed rejections (kept visible so the failure mode stays priced)
 

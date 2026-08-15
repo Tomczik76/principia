@@ -42,6 +42,36 @@ story in two or three sentences, the principle it evidences, where the full reco
   Bedrock responses are persisted raw before parsing so a parse failure doesn't lose the
   spend; the SES webhook is pinned to its topic ARN and fails closed. Discovered
   independently; recognized later as one solution. → *ACID-island crossing discipline.*
+- **The rule-DSL bake-off (2026-08-14).** Design-it-twice executed as three BUILT spikes
+  (initial GADT / tagless final / initial+staged-compile) over the same production rule
+  slice, judged by measurement: all three encodings ran FASTER than the hand-written
+  rule they modeled (compiled-initial 2.72 ms vs production 7.22 ms — the
+  abstraction-costs-performance instinct falsified by a printed number); the tagless
+  rules' structural interpreters existed only via reification into the initial ADT
+  (proven as a passing test); the counterexample-generating interpreter was the workload
+  that separated the encodings; and the derived description exposed shipped prose drift
+  (a rule's hand-written description omitted two conditions its check enforced). Full
+  record: contrapunctus `docs/design/rule-dsl-bakeoff.md`. → *design it twice, as
+  builds; measurement rule; initial/final choice (see canon/tagless-final.md).*
+- **The transposition-equivariance property (2026-08-15).** One ScalaCheck property —
+  analysis under given keys commutes with the interval-group action on scores —
+  certified the entire chord-ID → labelling → refinements pipeline with no oracle,
+  across chromatic vocabulary and modulations. Notably, the check was *found* by the
+  category-theory vocabulary (equivariance under a torsor action), not by any rule the
+  canon already carried: the vocabulary occasionally sees a check the rules don't
+  prescribe. → *metamorphic properties; name the algebra and it hands you the test.*
+- **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
+  inline in the key-chain router AND in the JS facade's model-agreement switch — a
+  future retune would have silently diverged the shipped frontend from the router.
+  Found not by audit but by a derive-don't-duplicate refactor giving the fact one home
+  (`KeyDetector.ShippedHmm`); the drift bug was dead before it fired. → *one canonical
+  representation — facts get one home; the refactor as the detector.*
+- **The `-Wconf` guard that matched nothing (2026-08-14).** Escalating match-analysis
+  warnings to errors: the `name=PatternMatchExhaustivity` filter form compiled fine and
+  silently matched nothing — caught only because the guard was verified to FIRE
+  (re-introducing a known defect and demanding red) before being trusted; the `id=E029`
+  form works. → *a structural guard must fail when it cannot find its anchor; verify
+  guards red-first.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
   durations; an atom with zero notes is unconstructible so no consumer defends against

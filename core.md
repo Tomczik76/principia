@@ -46,7 +46,11 @@ line enters only by displacing one.
   sync = every edit is a drift bug and the sync function is the bug surface. A layering
   chain where each hop RE-LISTS the fields it forwards is the same defect at N-fold: one
   datum in N representations, and the hop list is the sync function. Refuse to build a
-  layer that cannot state what it hides.
+  layer that cannot state what it hides. The programs-as-data corollary: encode a DSL by
+  its least fold-like interpreter — initial (data) and final (functions) are
+  interconvertible for a fixed signature, so expressiveness never decides; whole-tree
+  operations (inspection, search, normalization) are native only on data, and speed is
+  one fold-to-closures interpreter away (`canon/tagless-final.md`).
 - **Know when a change leaves the ACID island.** A system is centralized while its whole
   state updates atomically; distributed the moment one call mutates state the transaction
   cannot reach — and every external API call IS a state mutation somewhere. Prefer designs

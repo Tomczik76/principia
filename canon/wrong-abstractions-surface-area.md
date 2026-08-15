@@ -59,18 +59,30 @@ Also under-weighted by the talk: duplication carries its own surface (N almost-i
 blocks must each be read, and diffed against each other, to be understood) — the gate
 prices the abstraction side of the ledger, not the duplication side.
 
-**Jurisdiction boundary with `constraints-liberate.md` (2026-08-15).** Metz's gate and
-Rúnar's "constraints liberate" pull opposite directions on the same proposal, and the
-tension is real, not apparent. The resolution is jurisdictional: Metz governs
-abstractions *inferred from similarity* — bets that today's resemblance persists, where
-the failure mode is "the similarity was a coincidence." Rúnar governs abstractions
-*derived from structure* — lawful algebras whose correctness is provable, where that
-failure mode cannot occur because the similarity is a theorem. The discriminator is
-checkable: can you state laws and certify them against the existing code? If yes
-(reification tests, parity properties, a proven decomposition), the wrong-abstraction
-risk Metz prices has been discharged and the constraint's consumer-side payoff governs.
-If no, Metz's gate stands. The procedure for finding out which regime you're in is the
-bake-off: build the alternatives, prove or fail to prove the correspondence, measure.
+**Two failure modes, one per author — the boundary with `constraints-liberate.md`
+(2026-08-15).** Both talks are about wrong abstractions, and they name *orthogonal*
+failure modes rather than disagreeing about one:
+
+- **Wrong SHAPE (Metz).** The abstraction was inferred from similarity that was
+  coincidence — the structure never matched the domain, discovered when requirements
+  diverge and the parameter-and-flag graft begins. Cure: the admission gate; wait for
+  demonstrable duplication, or *prove* the structure.
+- **Wrong SIZE (Rúnar).** The abstraction is larger than the job — a monad where an
+  applicative suffices, `Any => Unit`, power the task never needed. The surplus is
+  exactly what leaks: every unused capability is a behavior consumers can no longer
+  rule out, a law that stops holding, an interpreter that stops existing ("the
+  strictly-more-powerful encoding supports strictly fewer conclusions"). Cure: the
+  least-powerful construct that says exactly what you mean.
+
+A proposal must pass BOTH gates, and they are discharged differently: shape by proof
+(can you state laws and certify them against the existing code? reification tests,
+parity properties, a proven decomposition — if yes, Metz's risk is discharged and the
+constraint's consumer-side payoff governs; if no, his gate stands) and size by
+restraint (choose the smallest algebra with the required interpreters, and audit that
+nothing stronger snuck in — a single HOAS constructor or monadic method resizes the
+whole structure). The bake-off is the procedure for both: build the alternatives,
+prove or fail to prove the correspondence, measure, and let the least-fold-like
+interpreter veto any encoding too big to support it.
 
 ## Evidence
 

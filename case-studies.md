@@ -81,6 +81,17 @@ story in two or three sentences, the principle it evidences, where the full reco
   carve-out, genuinely-new weak-beat rules. → *similar-shaped code is sometimes one
   concept after all — prove it with a reconstruction certified against production,
   don't assert it.*
+- **The migration decision (2026-08-15).** With the bake-off's proofs in hand, the
+  product owner overrode the assistant's trigger-gated caution and ordered the
+  rules-as-data migration — explicitly discounting the wrong-abstraction warning on the
+  ground that a lawful algebra is not an inferred abstraction (the Metz/Rúnar
+  jurisdiction boundary, now recorded in `canon/wrong-abstractions-surface-area.md`),
+  and citing renewed founder interest in the engine as a first-class input. Phase 1
+  landed the same night: implementations migrated, identities kept (the case classes
+  keep equality/traits; check bodies become compiled DSL, descriptions become derived
+  and asserted equal to the historical prose — registry regen produced a zero diff).
+  → *jurisdiction boundary; migrate implementations, not identities; founder energy is
+  a legitimate design input.*
 - **Per-rule vs per-rule-set (2026-08-15).** A frame enrichment made single-rule DSL
   timings worse than the hand-written baseline (1.52×) — but rules ship in sets, and
   the set-level pass (one quantifier expansion amortized across four rules) ran 0.43×

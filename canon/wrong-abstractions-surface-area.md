@@ -59,6 +59,19 @@ Also under-weighted by the talk: duplication carries its own surface (N almost-i
 blocks must each be read, and diffed against each other, to be understood) — the gate
 prices the abstraction side of the ledger, not the duplication side.
 
+**Jurisdiction boundary with `constraints-liberate.md` (2026-08-15).** Metz's gate and
+Rúnar's "constraints liberate" pull opposite directions on the same proposal, and the
+tension is real, not apparent. The resolution is jurisdictional: Metz governs
+abstractions *inferred from similarity* — bets that today's resemblance persists, where
+the failure mode is "the similarity was a coincidence." Rúnar governs abstractions
+*derived from structure* — lawful algebras whose correctness is provable, where that
+failure mode cannot occur because the similarity is a theorem. The discriminator is
+checkable: can you state laws and certify them against the existing code? If yes
+(reification tests, parity properties, a proven decomposition), the wrong-abstraction
+risk Metz prices has been discharged and the constraint's consumer-side payoff governs.
+If no, Metz's gate stands. The procedure for finding out which regime you're in is the
+bake-off: build the alternatives, prove or fail to prove the correspondence, measure.
+
 ## Evidence
 
 See `../case-studies.md` — Contrapunctus: the `persistence` prop's four-boolean ancestor

@@ -72,6 +72,22 @@ story in two or three sentences, the principle it evidences, where the full reco
   (re-introducing a known defect and demanding red) before being trusted; the `id=E029`
   form works. → *a structural guard must fail when it cannot find its anchor; verify
   guards red-first.*
+- **The species-profunctor theorem (2026-08-15).** A 300-line bespoke species-2 checker
+  was proven (exact-list, ScalaCheck, both layout modes, partial inputs) to contain no
+  new motion-rule logic: its strong-beat checking IS the shared first-species rules
+  lifted through contramap-the-context / map-the-locations, minus one carve-out as a
+  post-filter. Production even contained the seam already — one buried call — fused
+  with parsing and index math. The bespoke residue named exactly: parser, remap,
+  carve-out, genuinely-new weak-beat rules. → *similar-shaped code is sometimes one
+  concept after all — prove it with a reconstruction certified against production,
+  don't assert it.*
+- **Per-rule vs per-rule-set (2026-08-15).** A frame enrichment made single-rule DSL
+  timings worse than the hand-written baseline (1.52×) — but rules ship in sets, and
+  the set-level pass (one quantifier expansion amortized across four rules) ran 0.43×
+  the hand-written code, which re-enumerates the space per rule. The first measurement
+  was honest and still misleading: the unit of measurement must match the unit of
+  shipping. → *measurement rule, refined: print the number at the granularity that
+  ships.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
   durations; an atom with zero notes is unconstructible so no consumer defends against

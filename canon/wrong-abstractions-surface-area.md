@@ -59,30 +59,36 @@ Also under-weighted by the talk: duplication carries its own surface (N almost-i
 blocks must each be read, and diffed against each other, to be understood) — the gate
 prices the abstraction side of the ledger, not the duplication side.
 
-**Two failure modes, one per author — the boundary with `constraints-liberate.md`
-(2026-08-15).** Both talks are about wrong abstractions, and they name *orthogonal*
-failure modes rather than disagreeing about one:
+**One lattice, two named failure modes — the boundary with `constraints-liberate.md`
+(2026-08-15).** Both talks are about wrong abstractions. Model an abstraction by its
+semantic extent A (what it admits) against the domain's need D; the failures are
+positions in the containment lattice:
 
-- **Wrong SHAPE (Metz).** The abstraction was inferred from similarity that was
-  coincidence — the structure never matched the domain, discovered when requirements
-  diverge and the parameter-and-flag graft begins. Cure: the admission gate; wait for
-  demonstrable duplication, or *prove* the structure.
-- **Wrong SIZE (Rúnar).** The abstraction is larger than the job — a monad where an
-  applicative suffices, `Any => Unit`, power the task never needed. The surplus is
-  exactly what leaks: every unused capability is a behavior consumers can no longer
-  rule out, a law that stops holding, an interpreter that stops existing ("the
-  strictly-more-powerful encoding supports strictly fewer conclusions"). Cure: the
-  least-powerful construct that says exactly what you mean.
+- **D ⊊ A — pure oversize (Rúnar).** Everything needed is covered, plus surplus, and
+  the surplus is exactly what leaks: every unused capability is a behavior consumers
+  can no longer rule out, a law that stops holding, an interpreter that stops
+  existing ("the strictly-more-powerful encoding supports strictly fewer
+  conclusions"). Cure: restraint — the least-powerful construct that says exactly
+  what you mean; audit that nothing stronger snuck in (one HOAS constructor or
+  monadic method resizes the whole structure).
+- **A, D incomparable — wrong shape (Metz).** Inferred from similarity that was
+  coincidence: junk in one direction AND gaps in the other — wrong shape *contains*
+  wrong size as a component. The parameter-and-flag graft is the predicted dynamic:
+  each graft grows A chasing the gaps while accumulating more junk, monotone growth
+  toward a containment it never reaches. Cure: the admission gate, or *prove* the
+  shape (laws certified against existing code — reification, parity, a proven
+  decomposition — after which the constraint's consumer-side payoff governs).
+- **A ⊊ D — undersize.** The cheap failure, by the repair asymmetry: growing A is
+  compatible (a small language embeds into a larger one later — detonate-late's own
+  observation), while shrinking A breaks consumers, because Hyrum's law makes every
+  shipped surplus load-bearing. You cannot put the explosion back in the dynamite.
 
-A proposal must pass BOTH gates, and they are discharged differently: shape by proof
-(can you state laws and certify them against the existing code? reification tests,
-parity properties, a proven decomposition — if yes, Metz's risk is discharged and the
-constraint's consumer-side payoff governs; if no, his gate stands) and size by
-restraint (choose the smallest algebra with the required interpreters, and audit that
-nothing stronger snuck in — a single HOAS constructor or monadic method resizes the
-whole structure). The bake-off is the procedure for both: build the alternatives,
-prove or fail to prove the correspondence, measure, and let the least-fold-like
-interpreter veto any encoding too big to support it.
+The asymmetry is the deepest justification for least-power on record: not asceticism
+but choosing the recoverable failure mode — err small, because undersize is fixed by
+addition, oversize only by breakage, and wrong shape requires both. The bake-off is
+the diagnostic procedure for the whole lattice: build the alternatives, prove or fail
+to prove the shape, and let the least-fold-like interpreter veto any encoding too
+large to support it.
 
 ## Evidence
 

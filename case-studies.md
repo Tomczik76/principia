@@ -49,6 +49,34 @@ story in two or three sentences, the principle it evidences, where the full reco
   occupies the slot where coverage would go; provisioning is part of a test's
   existence; wiring arbiters convert casual un-wiring into a visible decision — that is
   what they are for.*
+- **The sanitizer that ate the answers (2026-08-16).** A defensive pass rewrote each
+  submitted exercise attempt from the exercise's own content, so a student could not
+  tamper with the locked voice. It built its result by iterating the EXERCISE's staves
+  and beats — and the exercises in question are authored with the answer staff EMPTY,
+  because "harmonize this melody" means exactly that. Zero beats to iterate, so the
+  student's entire answer was discarded before it reached the database, and the attempt
+  then scored 100% for music that was not there. The security property and the data loss
+  were the same line: a guard written as "keep only what I already know about" cannot
+  distinguish an attack from an answer. The repair kept the property (a locked beat still
+  always comes from the exercise) and changed only the indices where nothing lockable
+  exists. → *a defence that filters by a whitelist of expected shapes deletes legitimate
+  input the moment the expected shape is "empty"; enumerate what you REJECT, not what you
+  keep; scoring something you just silently truncated turns data loss into a false pass.*
+- **The quarantine that indicted the wrong layer (2026-08-16).** Six end-to-end scenarios
+  were tagged `@wip` with a confident written cause — "driver clicks land outside the
+  stave; needs interactive debug of the SVG-to-screen mapping" — repeated across five
+  files, each citing the others. Every word was wrong: the driver's constants matched the
+  app's, its clicks hit the target element, and its noteheads rendered at the right
+  coordinates. The defect was server-side data loss two layers away. The diagnosis had
+  been written when the tests were quarantined, never re-tested, and hardened into fact
+  by repetition — so the quarantine both hid the bug and misdirected everyone who looked
+  at it. What broke it open was refusing to reason and instrumenting instead, outward
+  along the path: coordinates → hit-testing → rendered result → the actual request and
+  response bodies. The bug was visible in one line the moment the network was printed.
+  → *a skipped test's stated cause is an unverified hypothesis wearing a finding's
+  clothes, and it decays while nobody runs it; when a repro passes, suspect the fixture,
+  not the report; instrument outward from the symptom rather than inward from the
+  suspicion.*
 - **The silence half of the spec (2026-08-15).** A species checker flagged every
   interior octave as a unison error for months — and the suite DEFENDED the bug: two
   regression baselines asserted the wrong counts as expected ("known failures — fires

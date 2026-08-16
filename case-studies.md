@@ -49,6 +49,31 @@ story in two or three sentences, the principle it evidences, where the full reco
   occupies the slot where coverage would go; provisioning is part of a test's
   existence; wiring arbiters convert casual un-wiring into a visible decision — that is
   what they are for.*
+- **The silence half of the spec (2026-08-15).** A species checker flagged every
+  interior octave as a unison error for months — and the suite DEFENDED the bug: two
+  regression baselines asserted the wrong counts as expected ("known failures — fires
+  on 4 exercises"), and curation prose had grown musical rationales for them ("Fux uses
+  interior unisons freely in 3rd species") that were simply false. The root asymmetry:
+  everything the repo's PBT naturally produced certified FIRING — properties phrased
+  "when X, flag", and differential oracles that bless silence and noise alike so long
+  as both sides agree — while the obligations to stay SILENT (exemptions: contrary
+  motion, chord doublings, sustained leading tones, augmented-sixth beats) lived in
+  comments, which is spec not under test. And the two error classes age differently:
+  a missed violation gets reported; a wrong flag arrives wearing the checker's own
+  authority and gets rationalized — so the silence side accrues debt invisibly. Paid
+  in three layers, same day: an absolute suite of mostly-NEGATIVE musical fixtures,
+  several encoding real user corrections that had no test; generator injection into
+  each exemption region with the suite asserting its own REACH (a family whose
+  reference implementation never fires over the generated population proves nothing —
+  the check caught one vacuous row immediately); and a 35-edit mutation sweep as the
+  meta-instrument, whose one survivor (`ScaleHasLeadingTone → true`) was invisible
+  because every generator drew the major scale — a region of input space no generator
+  could reach, which turned out to be the shared root of two other defects found the
+  same day. → *a checker's spec is half silence: every exemption is a must-not-fire
+  fixture, never a comment; a generator that cannot reach the interesting case makes
+  every property it feeds vacuous — measure reach, don't assume it; mutation testing
+  finds the unreachable regions without a human guessing first; false positives get
+  rationalized where false negatives get reported.*
 - **The equivariance suite (2026-08-14).** The engine's deepest property is a
   commutation square stated with no oracle: analysis-under-given-keys of a transposed
   score equals the transposition of the analysis — run engine-wide over the whole
@@ -229,8 +254,6 @@ bullets that ride on a source's own measurements.
 - Spend top-down authority on the least important decisions.
 - Define errors out of existence.
 - Test your tests: generator and shrinker validity properties (Hughes).
-- Measure the test-data distribution; a generator that cannot reach the interesting case
-  makes every property it feeds vacuous (Hughes).
 - Equivalence, not structural equality, as the exported equality of an abstract type
   (Hughes).
 - Ask what an update destroys — accrete the fact, project the current view (Hickey, *The

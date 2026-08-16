@@ -14,6 +14,41 @@ story in two or three sentences, the principle it evidences, where the full reco
   correctly, never reached the renderer, while a test asserted success because it built
   its own copy and measured that. The safety mechanism and the blindness were the same
   fact. → *red-e2e-first; test the seam; guardrails don't steer.*
+- **The pixel-replay arbiter (2026-08-15).** The bar-map day's mirror image: an arbiter
+  RED over a working product, same root. The partial-span round-trip e2e re-selected a
+  cut span by replaying the first gesture's recorded pixels — a valid proxy for span
+  identity exactly as long as delete preserved every glyph's width, and the step's own
+  comment carried that premise ("rests preserved the onsets"). When rest consolidation
+  landed and legitimately reflowed the layout, the proxy expired: same pixels, different
+  music, red test, intact product — the documented contract (the span's boundary onsets
+  survive as written beats) held throughout. Two moves settled it. A resolution-curve
+  sweep (drag once per 4px offset, print what each names) separated "unreachable —
+  product bug" from "mis-aimed — harness bug" in one run: the zone naming the boundary
+  ended 16px LEFT of the drawn notehead, so no fixed pixel could be right by
+  construction. The repaired step then modeled what a user actually does under a live
+  highlight — search until the app names the remembered span — while keeping span
+  identity exact, and its green was not trusted until a product mutation (cut eating a
+  quarter past the selection) turned it red at the anchor lookup, 3/3 retries, naming
+  the harm. → *an arbiter pins the contract, not the implementation premise — premise-
+  pinned arbiters drift in both directions (green over broken, red over working); a
+  proxy assertion expires with the premise that justified it; measure the response curve
+  before ruling product-vs-harness; a repaired guard proves nothing until you have
+  watched it fail.*
+- **The arbiter ecology around one feature (2026-08-15).** Rest consolidation shipped
+  with three vitest arbiters whose stated purpose is to go red if the call is ever
+  unwired ("scoped and re-enabled" vs "scoped and forgotten") — and with its e2e
+  certifier unable to execute anywhere: no worktree had e2e's node_modules (`npx`
+  silently fetched a registry placeholder), so the arbiter flagged "cert OUTSTANDING"
+  never ran and the feature landed on reasoning alone. Both halves taught. The absent
+  arbiter let the pixel-replay interaction ship unobserved; the present arbiters priced
+  the lazy fix correctly — "disable the call, one line" was actually a four-file change
+  that deletes deliberate tests, which forced the investigation that exonerated the
+  product instead. Fixed as mechanism, not memory: worktree setup links the deps, and
+  the gate pre-flights them at t=0, exiting with the fix spelled out (guard watched
+  failing red and passing green before being trusted). → *a test that cannot run
+  occupies the slot where coverage would go; provisioning is part of a test's
+  existence; wiring arbiters convert casual un-wiring into a visible decision — that is
+  what they are for.*
 - **The score-document hop chain.** One document's fields survive ~10 hops (wire schema →
   seed → props → store → IndexedDB → backend request → DB → share-image event → render
   input), each hop re-listing what it forwards. `keyChanges` needed seven separate

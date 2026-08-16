@@ -18,6 +18,7 @@ montage) live in the private mirror repo `Tomczik76/principia-transcripts`.
 | `ousterhout-philosophy-of-software-design-google-2018.txt` | `5bcf3925e328f71ee935f06cac0c851f20af22de8e546aa2371c28e852305c62` | auto-generated captions; Talks at Google 2018 | mirror only |
 | `markbage-minimal-api-surface-area-jsconf-eu-2014.txt` | `2b7cd826e8e3b0036a2621e1c65b739e5589649a30dfdc90730424078b3500fc` | auto-generated captions; JSConf EU 2014 | mirror only |
 | `kleppmann-transactions-myths-surprises-opportunities-strange-loop-2015.txt` | `e996fd83a752d7116df1ea46350424988e930e1fcc00b3d8c1c43b8953feabcd` | auto-generated captions; Strange Loop 2015 | mirror only |
+| `milewski-profunctor-optics-lambda-world-2017.txt` | `134a92afcc048d9d002de47c8d9681cda04c374cc2bc623be9977ed7544c242e` | auto-generated captions; Lambda World 2017 (Cádiz) | mirror only |
 
 Sources cited by URL only, never archived: Hickey *Simple Made Easy* (matthiasn repo),
 King *Parse, Don't Validate* (lexi-lambda.github.io), Metz *The Wrong Abstraction*

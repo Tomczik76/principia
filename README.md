@@ -54,5 +54,7 @@ Hickey, *Simple Made Easy* + *The Value of Values* · Bjarnason, *Constraints Li
 Liberties Constrain* + *Composing Programs* · King, *Parse, Don't Validate* · Ousterhout,
 *A Philosophy of Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal
 API Surface Area* · Hughes, *How to Specify It!* ·
+Kiselyov, *Typed Tagless-Final Interpreters* · Milewski, *Profunctor Optics* (talk +
+essay) ·
 Bailis et al., *Feral Concurrency Control* + Kleppmann, *Transactions: Myths, Surprises
 and Opportunities*.

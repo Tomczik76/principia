@@ -55,14 +55,12 @@ Direct lineage: Strachey/Scott denotational semantics applied to *library* desig
 
 ## Evidence
 
-`case-studies.md`, Contrapunctus — the cata-as-spec pair: `Traverse[Pulse]`'s lawful
-instance is the specification of the rhythm tree's meaning (its timed unfolding), and
-the fused hot paths (`flatten`, `mapWithState`) are pinned to it against production
-entry points, with measured constants recorded in the instance's scaladoc.
-`PitchPropertySuite` holds the meaning-laws of the opaque pitch representation
-((p + m) − m == p; m + m.invert == octave). The NEGATIVE instance is recorded too:
-`NoteType.equals` compares by pitch-class value while `letterIndex` distinguishes —
-semantic equality violated, substitutivity fails, and instance derivation for the type
-is blocked exactly as this file predicts. See `theorems-for-free.md` (where the laws
-come from when polymorphism can supply them) and `how-to-specify-it.md` (how to
-generate against them).
+`case-studies.md`, Contrapunctus — **the cata-as-spec pair (2026-08-15)**: the lawful
+`Traverse[Pulse]` instance is the executable meaning of the rhythm tree, and the fused
+hot-path forms are certified against it at the production entry points with their
+measured constants recorded — the paid instance of both the morphism obligation and
+this file's one deliberate relaxation of Elliott (representation-level overrides
+allowed, *certified*). That entry also carries the negative instance —
+`NoteType.equals` breaking semantic equality — which is bullet 4 failing in the wild.
+See `theorems-for-free.md` (where laws come from when polymorphism can supply them)
+and `how-to-specify-it.md` (how to generate against them).

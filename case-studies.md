@@ -74,18 +74,6 @@ story in two or three sentences, the principle it evidences, where the full reco
   every property it feeds vacuous — measure reach, don't assume it; mutation testing
   finds the unreachable regions without a human guessing first; false positives get
   rationalized where false negatives get reported.*
-- **The equivariance suite (2026-08-14).** The engine's deepest property is a
-  commutation square stated with no oracle: analysis-under-given-keys of a transposed
-  score equals the transposition of the analysis — run engine-wide over the whole
-  chord-ID → labelling → refinements pipeline, diatonic and chromatic transpositions
-  including Ger⁺⁶/vii°⁷, and a modulating case. What made the square STATABLE is
-  algebraic discipline: `Pitch` is kept a lawful torsor over ℤ² (intervals act,
-  differences exist, no privileged origin), so "transpose everything" is well-defined
-  across the score. The theorem is not free — the engine is deliberately monomorphic
-  in pitch, since analysis must inspect it — so what parametricity would have donated
-  is owed instead, and the suite pays it. → *a commutation law is a spec with no
-  oracle; polymorphism makes such laws free, concretion makes them owed; the algebra
-  is what makes the law statable at all.*
 - **The score-document hop chain.** One document's fields survive ~10 hops (wire schema →
   seed → props → store → IndexedDB → backend request → DB → share-image event → render
   input), each hop re-listing what it forwards. `keyChanges` needed seven separate
@@ -131,7 +119,25 @@ story in two or three sentences, the principle it evidences, where the full reco
   across chromatic vocabulary and modulations. Notably, the check was *found* by the
   category-theory vocabulary (equivariance under a torsor action), not by any rule the
   canon already carried: the vocabulary occasionally sees a check the rules don't
-  prescribe. → *metamorphic properties; name the algebra and it hands you the test.*
+  prescribe. Two things made it statable and necessary: `Pitch` is kept a lawful torsor
+  over ℤ² (intervals act, differences exist, no privileged origin), so "transpose
+  everything" is well-defined across a score; and the engine is deliberately
+  MONOMORPHIC in pitch — analysis must read it — so the commutation square that
+  parametricity donates for free to a polymorphic function is here *owed*, and a suite
+  is what pays it. → *metamorphic properties; name the algebra and it hands you the
+  test; polymorphism makes such laws free, concretion makes them owed.*
+- **The cata-as-spec pair (2026-08-15).** The rhythm tree's meaning was made
+  executable: a lawful `Traverse[Pulse]` instance IS the specification (its
+  denotation), and the fused hot-path forms production actually calls — `flatten`,
+  `mapWithState` — are pinned to it by properties run against the production entry
+  points, with the measured constants recorded in the instance's scaladoc so the
+  override's price is stated where the override lives. The negative instance sits in
+  the same codebase and is why it matters: `NoteType.equals` compares by pitch-class
+  value while `letterIndex` distinguishes, so semantic equality fails, substitutivity
+  fails with it, and lawful instance derivation for that type is blocked until it is
+  repaired. → *the lawful instance is the spec and fast forms certify against it;
+  exported equality must be equivalence of meaning or nothing built on the type is
+  trustworthy.*
 - **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
   inline in the key-chain router AND in the JS facade's model-agreement switch — a
   future retune would have silently diverged the shipped frontend from the router.

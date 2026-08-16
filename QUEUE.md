@@ -6,7 +6,13 @@
    2007).** The ACID-island crossing discipline generalized into a design method:
    entities as the unit of atomicity, at-most-once messaging, idempotency as a
    first-class design input rather than a retrofit. Companion: "Memories, Guesses and
-   Apologies." Would deepen `canon/acid-island.md`.
+   Apologies." NOW OWES THE TERRITORY ITS CANON FILE: the prior distillate of a
+   conference talk covering the same ground was removed as superfluous (2026-08-16 —
+   the territory already had three homes and that was the weakest; DRY applies to
+   sources). Until this is digested, `core.md`'s "Know when a change leaves the ACID
+   island" bullet stands on the Kleppmann re-derivation in
+   `canon/feral-concurrency-control.md` and the paid evidence in `case-studies.md`
+   (three shipped crossings).
 2. **Saltzer, Reed & Clark — "End-to-End Arguments in System Design" (1984).**
    Correctness checks belong at the endpoints; reliability in the middle is only an
    optimization. Unifies two things the corpus already believes separately: webhook

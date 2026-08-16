@@ -50,8 +50,9 @@ companion rejection (*Hammock Driven Development*) stands; only this half is reo
 - **Perception costs coordination; a value costs none.** To observe several places
   consistently you must stop the world — that is what a read transaction *is*, and it is
   why nobody likes them. To observe a value you just look at it, as long as you like.
-  This is the read-side complement to `acid-island.md`, which prices only crossings on the
-  write side; and it is the mechanism behind "values make the best interfaces," which the
+  This is the read-side complement to the ACID-island crossing rule (`core.md`; write-side
+  crossings, grounded via `feral-concurrency-control.md`); and it is the mechanism behind
+  "values make the best interfaces," which the
   industry already concedes in the large (CORBA and DCOM died; JSON and XML are value
   representations) while continuing to pass references in the small. The same property
   buys **location flexibility**: components that exchange values can be moved across a

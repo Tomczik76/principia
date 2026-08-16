@@ -6,8 +6,11 @@ author version at bailis.org/papers/feral-sigmod2015.pdf), and Kleppmann, "Trans
 Myths, Surprises and Opportunities" (Strange Loop 2015 — chapter 7 of *Designing
 Data-Intensive Applications* in embryo). Both archived in `transcripts/`, untracked.
 Digested as a pair: Kleppmann supplies the anomaly recognizers, Bailis the field
-measurements of the same failure class. Jurisdiction split with `acid-island.md`: that
-file governs crossings *out* of the ACID island; this one governs races *inside* it.
+measurements of the same failure class. Jurisdiction note: `core.md`'s ACID-island
+crossing rule governs crossings *out* of the island; this file governs races *inside*
+it — and since the separate crossing distillate was removed as superfluous
+(2026-08-16), the Kleppmann re-derivation below is that rule's in-canon ground until
+Helland (QUEUE #1) is digested.
 
 ## The import
 
@@ -58,9 +61,9 @@ in about 3 databases of ~20 and unsupported in roughly half. Wrapping a check in
   Corollary: bespoke cleanup code after a partial failure is hand-rolling the collapse a
   transaction gives free. His microservices half — every sufficiently large deployment
   "contains an ad hoc, informally specified, bug-ridden slow implementation of half of
-  transactions" — is `acid-island.md`'s crossing discipline re-derived from the failure
-  side (compensating transactions = app-level atomicity, apologies = app-level C).
-  Convergent; already imported there.
+  transactions" — derives the ACID-island crossing discipline (`core.md`) from the
+  failure side (compensating transactions = app-level atomicity, apologies =
+  app-level C). This passage is that rule's canon ground.
 
 ## Do not import
 

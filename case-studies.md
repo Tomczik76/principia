@@ -49,6 +49,18 @@ story in two or three sentences, the principle it evidences, where the full reco
   occupies the slot where coverage would go; provisioning is part of a test's
   existence; wiring arbiters convert casual un-wiring into a visible decision — that is
   what they are for.*
+- **The equivariance suite (2026-08-14).** The engine's deepest property is a
+  commutation square stated with no oracle: analysis-under-given-keys of a transposed
+  score equals the transposition of the analysis — run engine-wide over the whole
+  chord-ID → labelling → refinements pipeline, diatonic and chromatic transpositions
+  including Ger⁺⁶/vii°⁷, and a modulating case. What made the square STATABLE is
+  algebraic discipline: `Pitch` is kept a lawful torsor over ℤ² (intervals act,
+  differences exist, no privileged origin), so "transpose everything" is well-defined
+  across the score. The theorem is not free — the engine is deliberately monomorphic
+  in pitch, since analysis must inspect it — so what parametricity would have donated
+  is owed instead, and the suite pays it. → *a commutation law is a spec with no
+  oracle; polymorphism makes such laws free, concretion makes them owed; the algebra
+  is what makes the law statable at all.*
 - **The score-document hop chain.** One document's fields survive ~10 hops (wire schema →
   seed → props → store → IndexedDB → backend request → DB → share-image event → render
   input), each hop re-listing what it forwards. `keyChanges` needed seven separate

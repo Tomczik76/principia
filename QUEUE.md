@@ -62,6 +62,18 @@
 
 ## Rejected as redundant (do not re-litigate without new evidence)
 
+- **Milewski, "Profunctor Optics: The Categorical Approach"** (Lambda World 2017;
+  transcript stays archived; was canon for a few hours on 2026-08-16). The best-read
+  rejection in this list: digested in full from the transcript, then demoted the same
+  day by the instrument it prompted. Measured grounds: ~90% of the talk landed in its
+  own do-not-import section (the Yoneda/Tambara/Pastro–Street derivation), and of four
+  imported bullets only the dimap decomposition had paid evidence — a rule the
+  species-profunctor ANCHOR in `case-studies.md` already carries in its own tags; the
+  Yoneda bullet restated `tagless-final.md`'s initial/final license; the rest was
+  vocabulary. The talk derives optics encodings; the corpus uses bare `dimap`, once,
+  certified, with no optics library. The territory's sources are now
+  `canon/theorems-for-free.md` + `canon/denotational-design.md`, admitted the same day
+  on paid evidence.
 - **Hickey, "Hammock Driven Development"** — covered by core's red-check-first testing
   rule and its design-it-twice discipline. (Rejection unread; see the reversal above for
   what that is worth. Re-check against the transcript before relying on it.)

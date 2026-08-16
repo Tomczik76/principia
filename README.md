@@ -53,8 +53,8 @@ archive filenames to their origins.
 Hickey, *Simple Made Easy* + *The Value of Values* · Bjarnason, *Constraints Liberate,
 Liberties Constrain* + *Composing Programs* · King, *Parse, Don't Validate* · Ousterhout,
 *A Philosophy of Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal
-API Surface Area* · Hughes, *How to Specify It!* ·
-Kiselyov, *Typed Tagless-Final Interpreters* · Milewski, *Profunctor Optics* (talk +
-essay) ·
+API Surface Area* · Hughes, *How to Specify It!* · Wadler, *Theorems for Free!* ·
+Elliott, *Denotational Design with Type Class Morphisms* ·
+Kiselyov, *Typed Tagless-Final Interpreters* ·
 Bailis et al., *Feral Concurrency Control* + Kleppmann, *Transactions: Myths, Surprises
 and Opportunities*.

@@ -11,6 +11,8 @@ cd "$(dirname "$0")"
 declare -A urls=(
   [hickey-value-of-values-jaxconf-2012.md]="https://raw.githubusercontent.com/matthiasn/talk-transcripts/refs/heads/master/Hickey_Rich/ValueOfValues-mostly-text.md"
   [bailis-feral-concurrency-control-sigmod-2015.pdf]="http://www.bailis.org/papers/feral-sigmod2015.pdf"
+  [wadler-theorems-for-free-fpca-1989.ps]="https://homepages.inf.ed.ac.uk/wadler/papers/free/free.ps"
+  [elliott-denotational-design-type-class-morphisms-2009.pdf]="http://conal.net/papers/type-class-morphisms/type-class-morphisms.pdf"
 )
 
 for f in "${!urls[@]}"; do
@@ -26,7 +28,7 @@ missing=0
 while IFS='|' read -r _ file sha _; do
   file="$(echo "$file" | tr -d ' \`')"
   sha="$(echo "$sha" | tr -d ' \`')"
-  [[ "$file" == *.md || "$file" == *.txt || "$file" == *.pdf ]] || continue
+  [[ "$file" == *.md || "$file" == *.txt || "$file" == *.pdf || "$file" == *.ps ]] || continue
   [[ "$file" == "MANIFEST.md" ]] && continue
   if [[ ! -f "$file" ]]; then
     echo "MISSING  $file (mirror only? clone the private mirror)"

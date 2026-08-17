@@ -46,11 +46,17 @@ line enters only by displacing one.
   sync = every edit is a drift bug and the sync function is the bug surface. A layering
   chain where each hop RE-LISTS the fields it forwards is the same defect at N-fold: one
   datum in N representations, and the hop list is the sync function. Refuse to build a
-  layer that cannot state what it hides. The programs-as-data corollary: encode a DSL by
-  its least fold-like interpreter — initial (data) and final (functions) are
-  interconvertible for a fixed signature, so expressiveness never decides; whole-tree
-  operations (inspection, search, normalization) are native only on data, and speed is
-  one fold-to-closures interpreter away (`canon/tagless-final.md`).
+  layer that cannot state what it hides. The general form is data versus codata: DATA is
+  defined by how it is constructed and eliminated by matching its cases; CODATA by the
+  observations it offers and eliminated by calling them. Choose per subsystem, by the
+  work: data when you transform inputs by cases — it buys exhaustivity, so a new case
+  breaks every consumer at compile time; codata when you are declaring what a consumer
+  may do — it buys cheap new implementations and freezes the interface instead. For a
+  DSL specifically, encode by the least fold-like interpreter: initial (data) and final
+  (functions) are interconvertible for a fixed signature, so expressiveness never
+  decides; whole-tree operations (inspection, search, normalization) are native only on
+  data, and speed is one fold-to-closures interpreter away
+  (`canon/data-and-codata.md`, `canon/tagless-final.md`).
 - **Know when a change leaves the ACID island.** A system is centralized while its whole
   state updates atomically; distributed the moment one call mutates state the transaction
   cannot reach — and every external API call IS a state mutation somewhere. Prefer designs
@@ -68,7 +74,9 @@ line enters only by displacing one.
   them, never correctness), and everything routes through it. A defensive check deep in
   the interior is a diagnostic that the boundary failed to parse; the fix direction is
   always upward. When the invariant won't fit in a type, a smart constructor over an
-  opaque type makes the parse the only source of the value. Caveats: not every invariant
+  opaque type makes the parse the only source of the value — and that type's exported
+  EQUALITY must be equivalence of meaning, or substitutivity fails and every instance,
+  property and cache built on it inherits the lie (`canon/denotational-design.md`). Caveats: not every invariant
   merits a type; complex input can need several passes; authorization may precede parsing.
 - **Detonate as late as possible.** Keep the symbolic, structured, exact representation as
   long as you can; go lossy — strings, doubles, rendered output, executed effects — as the
@@ -132,7 +140,11 @@ line enters only by displacing one.
   implementation replicates its misconceptions; a property plus a generator states the
   check independently of the code's shape. Reach for a model-based property when a simple
   abstract model exists (measured strongest), metamorphic relations when it does not;
-  validity invariants alone are weak. Jurisdiction: a property certifies the artifact,
+  validity invariants alone are weak. A metamorphic relation is a commutation square
+  (transform-then-run == run-then-transform), and a polymorphic signature DONATES one —
+  the type cannot inspect what it abstracts over, so the square holds for free. Concrete
+  code that must read its values owes the same square instead: state it over the domain's
+  own symmetry and pay for it with a suite (`canon/theorems-for-free.md`). Jurisdiction: a property certifies the artifact,
   never the wiring — arrival is the e2e check's job.
 - **Guardrails do not tell you which way to go.** A passing suite says nothing broke,
   never that the shape is right. Reach for a structural fix when the failure is

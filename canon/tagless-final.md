@@ -6,6 +6,10 @@ https://okmij.org/ftp/tagless-final/course/Boehm-Berarducci.html; Carette/Kisely
 "Finally Tagless, Partially Evaluated" (JFP 2009) —
 https://homes.luddy.indiana.edu/ccshan/tagless/jfp.pdf. Cited by URL; nothing archived.
 
+Companion: `data-and-codata.md` (Welsh) generalises this file's initial/final
+result to data-versus-codata and adds the derivation strategies — read it for the
+choice rule, this one for the interconvertibility proof and its limits.
+
 ## The import
 
 The corpus already says make invalid states unrepresentable, one canonical

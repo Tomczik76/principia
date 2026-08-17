@@ -154,6 +154,21 @@ story in two or three sentences, the principle it evidences, where the full reco
   parametricity donates for free to a polymorphic function is here *owed*, and a suite
   is what pays it. → *metamorphic properties; name the algebra and it hands you the
   test; polymorphism makes such laws free, concretion makes them owed.*
+- **Data for the rules, codata for the detectors (2026-08-14/15).** One codebase
+  applied the same choice rule to two subsystems and correctly got opposite answers.
+  The part-writing RULES became data — a GADT-indexed `Atom[F]`/`Pred[F]` ADT —
+  because the work is whole-tree (render prose, normalise to NNF, search for a
+  violating witness) and because adding an atom must break every interpreter at
+  compile time; the build escalates match-analysis warnings to errors so that
+  breakage is real rather than hoped for. The KEY DETECTORS became codata — a
+  `KeyDetector` trait declaring `name` and `detect` — because new detectors must be
+  cheap to add and nothing ever inspects a detector's structure; the one site that
+  must be total keeps a sealed enum beside it, so the selector is data while the
+  implementations are codata. Neither choice was a style preference: each followed
+  from which operation had to be easy and which failure the compiler had to catch.
+  → *data is defined by construction and bought with exhaustivity; codata by
+  observation and bought with open implementation — pick per subsystem, by the work
+  it must support.*
 - **The cata-as-spec pair (2026-08-15).** The rhythm tree's meaning was made
   executable: a lawful `Traverse[Pulse]` instance IS the specification (its
   denotation), and the fused hot-path forms production actually calls — `flatten`,

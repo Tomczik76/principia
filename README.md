@@ -55,6 +55,7 @@ Liberties Constrain* + *Composing Programs* · King, *Parse, Don't Validate* · 
 *A Philosophy of Software Design* · Metz, *The Wrong Abstraction* + Markbåge, *Minimal
 API Surface Area* · Hughes, *How to Specify It!* · Wadler, *Theorems for Free!* ·
 Elliott, *Denotational Design with Type Class Morphisms* ·
-Kiselyov, *Typed Tagless-Final Interpreters* ·
+Kiselyov, *Typed Tagless-Final Interpreters* + Welsh, *Functional Programming
+Strategies in Scala with Cats* ·
 Bailis et al., *Feral Concurrency Control* + Kleppmann, *Transactions: Myths, Surprises
 and Opportunities*.

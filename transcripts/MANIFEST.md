@@ -24,7 +24,9 @@ montage) live in the private mirror repo `Tomczik76/principia-transcripts`.
 
 Sources cited by URL only, never archived: Hickey *Simple Made Easy* (matthiasn repo),
 King *Parse, Don't Validate* (lexi-lambda.github.io), Metz *The Wrong Abstraction*
-(sandimetz.com) — see `SOURCES.md` in the archive/mirror.
+(sandimetz.com), Welsh *Functional Programming Strategies in Scala with Cats*
+(scalawithcats.com — a living book, so a checksum would pin a revision rather than
+the work) — see `SOURCES.md` in the archive/mirror.
 
 A checksum mismatch on a refetch means the upstream changed, not that this list is wrong:
 diff before overwriting, then update the hash here in the same commit as the new file

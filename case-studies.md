@@ -102,6 +102,34 @@ story in two or three sentences, the principle it evidences, where the full reco
   every property it feeds vacuous — measure reach, don't assume it; mutation testing
   finds the unreachable regions without a human guessing first; false positives get
   rationalized where false negatives get reported.*
+- **Four dispatchers on one integer (2026-08-16/17).** A species-counterpoint engine
+  exposed one entry point per species and no dispatcher, so all four callers — a JS
+  facade, a WASM engine, the server scorer, a CLI — wrote the `species match` themselves,
+  on a bare `Int`, each with its own fallback arm. They diverged three ways, and each
+  divergence was invisible for the same reason: no second caller ran that arm. The server
+  re-derived the measure grid by pairing off a note list it had already stripped rests
+  from, so Fux's own published fourth species scored 77 on submit against 97 in the
+  editor. The facade's `case _` read florid counterpoint with the FIRST-species checker
+  whenever the wire omitted durations. And the incomplete-measure check had exactly ONE
+  caller, which is why it was the most broken of all: pointing the shared dispatcher at it
+  dropped every one of Fux's twelve second-species solutions from 100 to 95, exposing a
+  false flag that had been live in the editor the whole time (his rest-led opening leaves
+  one note in bar 1; the checker demanded two, while its own sibling function in the same
+  file called that opening "equally canonical"). Both wrong-flag defects were defended by
+  pinned baselines whose prose had invented musical reasons — "cadences where Fux uses a
+  diminished or chromatic leap" (his actual adjacent leaps there are m3, M3, M2) and
+  "Fux's chains of suspensions repeatedly hit the unison strictures" (that was a
+  misaligned grid). The arbiter that should have caught the fourth-species split compared
+  the round-trip to the very function that did the bad re-derivation, and its fixture
+  never contained a rest, so it could not see the layout it existed to check. Paid with a
+  sealed `SpeciesTask` ADT plus compiler-escalated exhaustivity — verified by adding a
+  sixth case and watching two E029 errors fire — one smart constructor owning both
+  fallbacks, and corpus sweeps through the previously unshared path. → *a code path with
+  ONE caller is unvalidated by construction, and unifying divergent implementations
+  surfaces the least-exercised one's latent bugs — budget for that red rather than reading
+  it as a regression; a baseline that explains a wrong number with domain prose is the
+  signature of a defect being rationalized, not documented; an arbiter whose fixture
+  cannot express the failing shape is decoration.*
 - **The score-document hop chain.** One document's fields survive ~10 hops (wire schema →
   seed → props → store → IndexedDB → backend request → DB → share-image event → render
   input), each hop re-listing what it forwards. `keyChanges` needed seven separate

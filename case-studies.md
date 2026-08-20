@@ -214,6 +214,71 @@ story in two or three sentences, the principle it evidences, where the full reco
   → *the lawful instance is the spec and fast forms certify against it; exported
   equality must be equivalence of meaning or nothing built on the type is trustworthy;
   stage or fuse by arrival time, not by taste.*
+- **The laws that brought their own generator (2026-08-19).** `Rational` — the exact-time
+  type that exists precisely because doubles lose the algebraic relationships between
+  durations — carried a 15-property suite proving the field axioms BY HAND, untouched on
+  its merits since the commit that added it (only a package rename since). Nobody had
+  reason to revisit it: it was green, and it was checking the right axioms. The change
+  named the structure the type already had — `given CommutativeGroup` (additive, per the
+  cats convention that a numeric type's `Monoid` slot is addition) and, speculatively, a
+  multiplicative `CommutativeMonoid` — and handed both to cats-laws. The multiplicative
+  one died on the first run: `intercalateCombineAllOption` weaves a value through a
+  19-element vector and folds ~37 products, where every hand-written property had combined
+  two or three, and the `Long` denominator overflowed into the constructor's `require`.
+  The axioms were never the gap; the GENERATOR was, and the library shipped the one the
+  author had no reason to write. Pulling that thread found the worse defect underneath:
+  overflow does not reliably throw AT ALL. Checked against exact arithmetic, the ADDITIVE
+  fold — the instance that had just passed its full law suite — returns 1/2+⋯+1/53 as
+  0.133 where the true sum is 1.681, because the wrapped denominator renormalizes positive
+  and no `require` fires. Silent numeric corruption in the type chosen to be exact, and
+  the exception is the lucky case rather than the guarantee. Two disposals followed. The
+  multiplicative monoid was DROPPED rather than rescued by a narrower generator — no call
+  site wanted it, and a monoid whose `combineAll` lies is a false canonicity claim. The
+  additive instance was kept with its real domain stated at the instance and at the type,
+  and the boundary pinned by a test that asserts the WRONG answer on purpose — a sum of 16
+  positive terms coming back smaller than its own first term — so a future overflow-safe
+  repair turns it red and forces the caveat's removal. → *name the canonical structure and
+  take the library's laws: a hand-written axiom list re-derives the axioms but inherits the
+  author's generator blind spot; a refuted instance is the finding, not an obstacle to
+  route around — and the failure it reports is a thread, not the whole defect; pin a known
+  limitation as a test that fails when it is fixed.*
+- **The lawful order that dropped scale degrees (2026-08-20).** `Order[AlteredScaleDegree]`
+  keyed on `degree.ordinal - alteration.semitones` and was, by every law cats ships,
+  CORRECT: total, transitive, antisymmetric — and it had a hand-written antisymmetry
+  property passing beside it. It was still wrong. The key mapped 7×5 = 35 values onto 11,
+  so ~8% of distinct pairs compared EQUAL (♭III and IV both keyed to 3), and this is the
+  element type of three `NonEmptySet`s, where a collision silently drops a degree. Never
+  bitten: every one of those sets is built a singleton at a time. The sign was inverted
+  too, so flattening RAISED the key. What makes it evidence is where the blind spot sat.
+  Lawfulness was never the issue: the defect lives between `eqv` and `==`. Exactly one law
+  in the ruleset reaches it — `antiSymmetryEq`, substitutivity — and whether it fires
+  depends on a line nobody thinks of as load-bearing. It draws a function `f` from the
+  `Cogen`; if the `Cogen` distinguishes values the order calls equal, ScalaCheck can build
+  an `f` that separates them and the law fails. Key the `Cogen` off the ORDER's key and
+  all eighteen law tests go green against the broken instance. Measured three ways, after
+  the first explanation written here was wrong: supplying an independent `Eq` — the
+  obvious suspect, and what this entry originally credited — changes nothing, because
+  `OrderLaws` overrides `EqLaws.E` with the order under test, so an ambient `Eq` is
+  reached only by `reflexivityEq`. Same broken instance, same suite: with the independent
+  `Eq` and without it, identical results; swap only the `Cogen` and detection flips. The
+  hand-written property that had guarded this for months was worse than nothing in the
+  same way: `lteqv(a,b) && lteqv(b,a) ⟹ compare == 0` is cats' own DEFINITION of `lteqv`,
+  so no implementation could ever fail it. Two guards, both green, both vacuous, for
+  opposite reasons. → *lawful and correct are different claims — a law suite certifies
+  the algebra, never the agreement between an instance and the type's own equality;
+  a coherence law is only a check if its equality came from somewhere else; the
+  default configuration of a law suite is the one that looks like coverage.*
+- **The green that was a pipe (2026-08-19).** In that same session two checks certified
+  themselves. `sbt … | tail -30` reported exit 0 over a FAILED compile: a shell pipeline
+  exits with its LAST command's status, so the harness reported `tail`'s success while the
+  compile error scrolled past inside the captured text — a "green" that was never read.
+  And two constants asserted from reasoning rather than computation were both wrong: a
+  reduced denominator claimed as 840 (actually 5 — the numerator shared factors) and an
+  overflow boundary claimed at 16 coprime denominators (16 still fits; the wrap starts
+  silently after). Both were caught only by reading the log and recomputing against exact
+  arithmetic. → *a harness's success signal must be the thing under test, not the last
+  process in the pipe; the measurement rule governs asserted constants too — compute them
+  or do not assert them.*
 - **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
   inline in the key-chain router AND in the JS facade's model-agreement switch — a
   future retune would have silently diverged the shipped frontend from the router.
@@ -255,7 +320,14 @@ story in two or three sentences, the principle it evidences, where the full reco
   ships.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
-  durations; an atom with zero notes is unconstructible so no consumer defends against
+  durations — exact while the answer FITS, as the 2026-08-19 entry above records: it is
+  `Long`/`Long`, so the bound is representability of the reduced result, not the shape of
+  the inputs. Worth stating precisely, because the convenient shorthand is wrong: "safe on
+  subdivision denominators" is false as written — 2^22 and 7^22 are both 2^a·3^b·5^c·7^d
+  and their LCM is not representable. It is the bounded EXPONENTS that make production
+  safe, not the prime shape. (Found by audit, in the caveat written to document the
+  original defect — the second overstatement in as many passes over this one type.);
+  an atom with zero notes is unconstructible so no consumer defends against
   it; the pitch primitive is obtainable only through its smart constructor, and its
   algebraic laws are locked as ScalaCheck properties in `PitchPropertySuite` (including
   one genuine homomorphism shape: `Note.toPitch preserves midi`). The frontend's

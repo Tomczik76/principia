@@ -36,6 +36,45 @@ Direct lineage: Strachey/Scott denotational semantics applied to *library* desig
   be trusted. (Hughes states the same requirement from the property-testing side;
   Elliott grounds it: it is the precondition for μ existing at all.)
 
+- **Naming the structure is what summons the falsifier.** House sharpening, evidenced.
+  Elliott's obligation is discharged by *checking* the morphism, and the cheapest check
+  you will ever get is the one the class already ships: claiming `Monoid`/`Order`/
+  `Traverse` is what lets the library's law suite (cats-laws + discipline, ScalaCheck's
+  `Arbitrary` at every instantiation the class needs) run at all. So the procedure has a
+  first step before μ: when a type turns out to have a canonical object or operation —
+  an identity plus an associative merge, a canonical ordering, a codec, a group action —
+  give it the NAMED instance rather than an ad-hoc helper, in the companion object so it
+  is canonical for resolution too. Verification is the floor; the specification is the
+  goal — APIs taking `using Monoid[A]` state the structure in the type, where callers and
+  generic code can both see it. A hand-written axiom list is the weaker substitute: it
+  re-derives the axioms faithfully and still inherits the author's generator, which is
+  the half that finds bugs.
+
+- **Know which knob arms the coherence law — it is the `Cogen`, not the `Eq`.** The
+  sharpening the first bullet needs. A lawful instance can still disagree with the type's
+  own `==`: `Order.by` on a non-injective key satisfies every order law while calling
+  distinct values equal, which is Elliott's semantic-equality bullet failing in a form no
+  amount of law coverage announces. One law reaches it, substitutivity —
+  `antiSymmetryEq(x, y, f)`, which asks that equals map to equals under a GENERATED
+  function. That function comes from the `Cogen`, so the law can only fire when the
+  `Cogen` separates values the instance calls equal. Key the `Cogen` off the order's own
+  key and the check silently disarms.
+  The intuitive answer — supply an independent `Eq` — is wrong, and worth recording as
+  wrong because it is the first thing anyone reaches for: `OrderLaws` overrides `EqLaws.E`
+  with the instance under test, so an ambient `Eq` is consulted only by `reflexivityEq`,
+  which every `Eq` satisfies. Procedure: when you name an instance, ask what its laws will
+  key their generated functions on. If that is the same function the instance compares by,
+  you have a tautology with a library's name on it.
+
+- **A refuted instance is a finding; delete the claim, not the test.** The corollary of
+  "a failing morphism check is a design signal." When the laws refuse an instance you
+  proposed, the two honest exits are to fix the operation or to withdraw the claim —
+  never to narrow the generator until the claim survives. Publishing a class whose
+  `combineAll` lies is worse than publishing nothing: generic consumers were promised the
+  algebra, and the narrowed generator is the record of you being told and choosing not to
+  hear it. Where the structure IS real but only on a bounded domain, say the bound at the
+  instance and pin it with a test that fails when the bound is lifted.
+
 - **The denotation is the specification; fast forms certify against it.** House
   sharpening, evidenced: keep the lawful instance as the executable meaning, and admit
   fused hot-path implementations only with a parity proof against it plus the measured
@@ -62,5 +101,30 @@ measured constants recorded — the paid instance of both the morphism obligatio
 this file's one deliberate relaxation of Elliott (representation-level overrides
 allowed, *certified*). That entry also carries the negative instance —
 `NoteType.equals` breaking semantic equality — which is bullet 4 failing in the wild.
+
+**The laws that brought their own generator (2026-08-19)** pays the naming-the-structure
+and refuted-instance bullets above. `Rational` already HAD its canonical structure — a hand-proved field, 15 green
+properties — but had never NAMED it. Naming it and taking cats-laws refuted one of the
+two instances proposed (a speculative multiplicative `CommutativeMonoid`, which overflowed
+folding ~37 products); following that refutation down found the type returning 1/2+⋯+1/53
+as 0.133 instead of 1.681 — silently, in the type whose entire purpose is exactness, on
+the ADDITIVE instance that had just passed its own law suite clean. The monoid was dropped
+rather than accommodated by a narrower generator; the group was kept with its real domain
+stated at the instance. Both halves in one change: the naming bought the falsifier, and
+the refusal was informative — including about a defect it did not itself detect.
+
+**The lawful order that dropped scale degrees (2026-08-20)** pays the which-knob-arms-the-
+coherence-law bullet, and is the sharper half of the pair. `Order[AlteredScaleDegree]` satisfied every order law
+and was still wrong: its key was not injective, so `eqv` identified values the case
+class distinguishes, in the element type of three `NonEmptySet`s. Lawful and correct
+came apart cleanly, which is why "take the library's laws" is necessary and not
+sufficient — the defect lives between the instance and the type's own equality, exactly
+where bullet 4 says meaning is decided, and the ruleset reaches it through exactly one
+law whose trigger is the `Cogen`. The same codebase holds the case where arming it is not
+an option: `Note`'s key is non-injective too (`Note(Cb, 4)` and `Note(B, 3)` are both midi
+59), so a separating `Cogen` turns its suite red — correctly — and the incoherence is
+pinned as named tests instead.
+
 See `theorems-for-free.md` (where laws come from when polymorphism can supply them)
-and `how-to-specify-it.md` (how to generate against them).
+and `how-to-specify-it.md` (how to generate against them — and the generator-reach
+anchor the same case study pays there).

@@ -140,7 +140,19 @@ line enters only by displacing one.
   implementation replicates its misconceptions; a property plus a generator states the
   check independently of the code's shape. Reach for a model-based property when a simple
   abstract model exists (measured strongest), metamorphic relations when it does not;
-  validity invariants alone are weak. A metamorphic relation is a commutation square
+  validity invariants alone are weak. Where the structure is a NAMED algebra, claim the
+  instance (`Monoid`, `Order`, `Traverse` — in the companion, so it is canonical for
+  resolution) and take the library's law suite instead of hand-listing axioms: the naming
+  is what makes the falsifier available, and a hand-written list re-derives the axioms
+  faithfully while still inheriting your generator, which is the half that finds bugs. If
+  the laws refuse the instance, withdraw the claim or fix the operation — never narrow the
+  generator until it passes. Lawful never implies coherent with the type's own `==`, and
+  that gap is where instances actually go wrong: an `Order.by` on a non-injective key
+  satisfies every order law while calling distinct values equal. One law does catch it —
+  substitutivity — and only if the `Cogen` you supply distinguishes more than the
+  instance does, since that is what lets the generator build a function separating two
+  values the instance calls equal. Check what your law suite is keyed on before believing
+  its green. A metamorphic relation is a commutation square
   (transform-then-run == run-then-transform), and a polymorphic signature DONATES one —
   the type cannot inspect what it abstracts over, so the square holds for free. Concrete
   code that must read its values owes the same square instead: state it over the domain's

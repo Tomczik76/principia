@@ -289,9 +289,14 @@ story in two or three sentences, the principle it evidences, where the full reco
   ships.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
-  durations — exact on a BOUNDED domain, as the 2026-08-19 entry above records: it is
-  `Long`/`Long`, and outside Pulse's subdivision denominators the exactness expires
-  silently; an atom with zero notes is unconstructible so no consumer defends against
+  durations — exact while the answer FITS, as the 2026-08-19 entry above records: it is
+  `Long`/`Long`, so the bound is representability of the reduced result, not the shape of
+  the inputs. Worth stating precisely, because the convenient shorthand is wrong: "safe on
+  subdivision denominators" is false as written — 2^22 and 7^22 are both 2^a·3^b·5^c·7^d
+  and their LCM is not representable. It is the bounded EXPONENTS that make production
+  safe, not the prime shape. (Found by audit, in the caveat written to document the
+  original defect — the second overstatement in as many passes over this one type.);
+  an atom with zero notes is unconstructible so no consumer defends against
   it; the pitch primitive is obtainable only through its smart constructor, and its
   algebraic laws are locked as ScalaCheck properties in `PitchPropertySuite` (including
   one genuine homomorphism shape: `Note.toPitch preserves midi`). The frontend's

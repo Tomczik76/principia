@@ -209,6 +209,45 @@ story in two or three sentences, the principle it evidences, where the full reco
   repaired. → *the lawful instance is the spec and fast forms certify against it;
   exported equality must be equivalence of meaning or nothing built on the type is
   trustworthy.*
+- **The laws that brought their own generator (2026-08-19).** `Rational` — the exact-time
+  type that exists precisely because doubles lose the algebraic relationships between
+  durations — carried a 15-property suite proving the field axioms BY HAND, untouched on
+  its merits since the commit that added it (only a package rename since). Nobody had
+  reason to revisit it: it was green, and it was checking the right axioms. The change
+  named the structure the type already had — `given CommutativeGroup` (additive, per the
+  cats convention that a numeric type's `Monoid` slot is addition) and, speculatively, a
+  multiplicative `CommutativeMonoid` — and handed both to cats-laws. The multiplicative
+  one died on the first run: `intercalateCombineAllOption` weaves a value through a
+  19-element vector and folds ~37 products, where every hand-written property had combined
+  two or three, and the `Long` denominator overflowed into the constructor's `require`.
+  The axioms were never the gap; the GENERATOR was, and the library shipped the one the
+  author had no reason to write. Pulling that thread found the worse defect underneath:
+  overflow does not reliably throw AT ALL. Checked against exact arithmetic, the ADDITIVE
+  fold — the instance that had just passed its full law suite — returns 1/2+⋯+1/53 as
+  0.133 where the true sum is 1.681, because the wrapped denominator renormalizes positive
+  and no `require` fires. Silent numeric corruption in the type chosen to be exact, and
+  the exception is the lucky case rather than the guarantee. Two disposals followed. The
+  multiplicative monoid was DROPPED rather than rescued by a narrower generator — no call
+  site wanted it, and a monoid whose `combineAll` lies is a false canonicity claim. The
+  additive instance was kept with its real domain stated at the instance and at the type,
+  and the boundary pinned by a test that asserts the WRONG answer on purpose — a sum of 16
+  positive terms coming back smaller than its own first term — so a future overflow-safe
+  repair turns it red and forces the caveat's removal. → *name the canonical structure and
+  take the library's laws: a hand-written axiom list re-derives the axioms but inherits the
+  author's generator blind spot; a refuted instance is the finding, not an obstacle to
+  route around — and the failure it reports is a thread, not the whole defect; pin a known
+  limitation as a test that fails when it is fixed.*
+- **The green that was a pipe (2026-08-19).** In that same session two checks certified
+  themselves. `sbt … | tail -30` reported exit 0 over a FAILED compile: a shell pipeline
+  exits with its LAST command's status, so the harness reported `tail`'s success while the
+  compile error scrolled past inside the captured text — a "green" that was never read.
+  And two constants asserted from reasoning rather than computation were both wrong: a
+  reduced denominator claimed as 840 (actually 5 — the numerator shared factors) and an
+  overflow boundary claimed at 16 coprime denominators (16 still fits; the wrap starts
+  silently after). Both were caught only by reading the log and recomputing against exact
+  arithmetic. → *a harness's success signal must be the thing under test, not the last
+  process in the pipe; the measurement rule governs asserted constants too — compute them
+  or do not assert them.*
 - **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
   inline in the key-chain router AND in the JS facade's model-agreement switch — a
   future retune would have silently diverged the shipped frontend from the router.
@@ -250,7 +289,9 @@ story in two or three sentences, the principle it evidences, where the full reco
   ships.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
-  durations; an atom with zero notes is unconstructible so no consumer defends against
+  durations — exact on a BOUNDED domain, as the 2026-08-19 entry above records: it is
+  `Long`/`Long`, and outside Pulse's subdivision denominators the exactness expires
+  silently; an atom with zero notes is unconstructible so no consumer defends against
   it; the pitch primitive is obtainable only through its smart constructor, and its
   algebraic laws are locked as ScalaCheck properties in `PitchPropertySuite` (including
   one genuine homomorphism shape: `Note.toPitch preserves midi`). The frontend's

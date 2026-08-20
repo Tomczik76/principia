@@ -50,6 +50,18 @@ Direct lineage: Strachey/Scott denotational semantics applied to *library* desig
   re-derives the axioms faithfully and still inherits the author's generator, which is
   the half that finds bugs.
 
+- **Hand the laws an equality they did not derive from the instance.** The sharpening the
+  first bullet needs, and the failure mode it otherwise walks into. A class like `Order`
+  extends `Eq`, so a law suite with no independent `Eq` in scope checks the instance
+  against ITSELF: every coherence law passes by construction, and the green is
+  indistinguishable from coverage. Supply the type's own equality instead and the same
+  ruleset becomes a real check on the one property laws cannot otherwise see — that `eqv`
+  and `==` agree, which is Elliott's semantic-equality bullet stated where a machine can
+  test it. Procedure: when you name an instance, ask what `Eq` its laws will resolve to,
+  and if the answer is "the instance," you have written a tautology with a library's name
+  on it. If supplying the honest equality turns the suite red, that is the finding — the
+  type has two disagreeing equalities and the red is the accurate report.
+
 - **A refuted instance is a finding; delete the claim, not the test.** The corollary of
   "a failing morphism check is a design signal." When the laws refuse an instance you
   proposed, the two honest exits are to fix the operation or to withdraw the claim —
@@ -96,6 +108,17 @@ the ADDITIVE instance that had just passed its own law suite clean. The monoid w
 rather than accommodated by a narrower generator; the group was kept with its real domain
 stated at the instance. Both halves in one change: the naming bought the falsifier, and
 the refusal was informative — including about a defect it did not itself detect.
+
+**The lawful order that dropped scale degrees (2026-08-20)** pays the third bullet, and
+is the sharper half of the pair. `Order[AlteredScaleDegree]` satisfied every order law
+and was still wrong: its key was not injective, so `eqv` identified values the case
+class distinguishes, in the element type of three `NonEmptySet`s. Lawful and correct
+came apart cleanly, which is why "take the library's laws" is necessary and not
+sufficient — the defect lives between the instance and the type's own equality, exactly
+where bullet 4 says meaning is decided, and a law suite reaches it only when handed an
+independent `Eq`. The same codebase holds the case where that is impossible: `Note`
+carries two genuinely disagreeing equalities, so supplying the honest `Eq` turns its
+suite red and the incoherence is pinned as a named test instead.
 
 See `theorems-for-free.md` (where laws come from when polymorphism can supply them)
 and `how-to-specify-it.md` (how to generate against them — and the generator-reach

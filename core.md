@@ -146,7 +146,10 @@ line enters only by displacing one.
   is what makes the falsifier available, and a hand-written list re-derives the axioms
   faithfully while still inheriting your generator, which is the half that finds bugs. If
   the laws refuse the instance, withdraw the claim or fix the operation — never narrow the
-  generator until it passes. A metamorphic relation is a commutation square
+  generator until it passes. And hand those laws an equality the instance did not supply:
+  a class that extends `Eq` otherwise checks itself, so every coherence law passes by
+  construction and the green looks exactly like coverage. Lawful never implies coherent
+  with the type's own `==`, which is where instances actually go wrong. A metamorphic relation is a commutation square
   (transform-then-run == run-then-transform), and a polymorphic signature DONATES one —
   the type cannot inspect what it abstracts over, so the square holds for free. Concrete
   code that must read its values owes the same square instead: state it over the domain's

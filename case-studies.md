@@ -237,6 +237,27 @@ story in two or three sentences, the principle it evidences, where the full reco
   author's generator blind spot; a refuted instance is the finding, not an obstacle to
   route around — and the failure it reports is a thread, not the whole defect; pin a known
   limitation as a test that fails when it is fixed.*
+- **The lawful order that dropped scale degrees (2026-08-20).** `Order[AlteredScaleDegree]`
+  keyed on `degree.ordinal - alteration.semitones` and was, by every law cats ships,
+  CORRECT: total, transitive, antisymmetric — and it had a hand-written antisymmetry
+  property passing beside it. It was still wrong. The key mapped 7×5 = 35 values onto 11,
+  so ~8% of distinct pairs compared EQUAL (♭III and IV both keyed to 3), and this is the
+  element type of three `NonEmptySet`s, where a collision silently drops a degree. Never
+  bitten: every one of those sets is built a singleton at a time. The sign was inverted
+  too, so flattening RAISED the key. What makes it evidence is where the blind spot sat.
+  Lawfulness was never the issue and more law coverage would not have helped, because the
+  defect is between `eqv` and `==` — and cats' order laws compare with whatever `Eq` is in
+  scope, so with none supplied they fall back to the instance under test and every
+  coherence law becomes true by construction. Hand it an INDEPENDENT `Eq` and the same
+  ruleset fails on the first run; that is the whole difference between a real check and
+  a decorative one, and it is a line in the test file, not a property of the library. The
+  hand-written property that had guarded this for months was worse than nothing in the
+  same way: `lteqv(a,b) && lteqv(b,a) ⟹ compare == 0` is cats' own DEFINITION of `lteqv`,
+  so no implementation could ever fail it. Two guards, both green, both vacuous, for
+  opposite reasons. → *lawful and correct are different claims — a law suite certifies
+  the algebra, never the agreement between an instance and the type's own equality;
+  a coherence law is only a check if its equality came from somewhere else; the
+  default configuration of a law suite is the one that looks like coverage.*
 - **The green that was a pipe (2026-08-19).** In that same session two checks certified
   themselves. `sbt … | tail -30` reported exit 0 over a FAILED compile: a shell pipeline
   exits with its LAST command's status, so the harness reported `tail`'s success while the

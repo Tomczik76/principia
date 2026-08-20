@@ -245,12 +245,17 @@ story in two or three sentences, the principle it evidences, where the full reco
   element type of three `NonEmptySet`s, where a collision silently drops a degree. Never
   bitten: every one of those sets is built a singleton at a time. The sign was inverted
   too, so flattening RAISED the key. What makes it evidence is where the blind spot sat.
-  Lawfulness was never the issue and more law coverage would not have helped, because the
-  defect is between `eqv` and `==` — and cats' order laws compare with whatever `Eq` is in
-  scope, so with none supplied they fall back to the instance under test and every
-  coherence law becomes true by construction. Hand it an INDEPENDENT `Eq` and the same
-  ruleset fails on the first run; that is the whole difference between a real check and
-  a decorative one, and it is a line in the test file, not a property of the library. The
+  Lawfulness was never the issue: the defect lives between `eqv` and `==`. Exactly one law
+  in the ruleset reaches it — `antiSymmetryEq`, substitutivity — and whether it fires
+  depends on a line nobody thinks of as load-bearing. It draws a function `f` from the
+  `Cogen`; if the `Cogen` distinguishes values the order calls equal, ScalaCheck can build
+  an `f` that separates them and the law fails. Key the `Cogen` off the ORDER's key and
+  all eighteen law tests go green against the broken instance. Measured three ways, after
+  the first explanation written here was wrong: supplying an independent `Eq` — the
+  obvious suspect, and what this entry originally credited — changes nothing, because
+  `OrderLaws` overrides `EqLaws.E` with the order under test, so an ambient `Eq` is
+  reached only by `reflexivityEq`. Same broken instance, same suite: with the independent
+  `Eq` and without it, identical results; swap only the `Cogen` and detection flips. The
   hand-written property that had guarded this for months was worse than nothing in the
   same way: `lteqv(a,b) && lteqv(b,a) ⟹ compare == 0` is cats' own DEFINITION of `lteqv`,
   so no implementation could ever fail it. Two guards, both green, both vacuous, for

@@ -115,12 +115,31 @@ decorrelation argument; `../agent-era.md` carries it.
 
 See `../case-studies.md` — Contrapunctus: the bar-map inertness property (jurisdiction:
 artifact, not wiring), `rhythm/Rational.scala` (exactness as the precondition for
-algebraic properties *holding*), and the `Pitch` primitive's two-suite pattern —
-`PitchSuite`'s wire→`Pitch`→wire roundtrip section alongside `PitchPropertySuite`'s
-ScalaCheck properties (associativity of `+`, `(p + m) − m == p`, `m + m.invert ==
-PerfectOctave`), a production instance of algebraic properties over an exact
-representation.
+algebraic properties *holding* — and, per **the laws that brought their own generator**,
+the reminder that a finite representation's exactness is itself domain-bounded, so the
+algebra holds only where the arithmetic does), and the `Pitch` primitive's two-suite
+pattern — `PitchSuite`'s wire→`Pitch`→wire roundtrip section alongside
+`PitchPropertySuite`'s ScalaCheck properties (associativity of `+`, `(p + m) − m == p`,
+`m + m.invert == PerfectOctave`), a production instance of algebraic properties over an
+exact representation.
+
+**Generator reach — now anchored.** *The laws that brought their own generator
+(2026-08-19)* pays the reach half of measure-the-distribution. A hand-written suite proved
+`Rational`'s field axioms and never went red; its generator combined two or three values
+per property, so the many-element fold — where the `Long` denominator overflows and the
+answer silently goes wrong — was unreachable, and every axiom it certified was vacuous
+THERE while true everywhere it looked. The fix was not a better property but a better
+generator, and it arrived by DELEGATION: cats-laws folds ~20 generated values through
+`combineAllOption` / `intercalateCombineAllOption` because the class's own algebra demands
+it, not because anyone suspected overflow. Where a standard algebra exists, the library's
+law suite is the decorrelated generator — written by someone who did not share the
+author's blind spot, and reaching cases the author had no reason to consider interesting.
+Note the shape of the catch: the law that actually failed was on a DIFFERENT instance
+(a speculative multiplicative monoid) and it failed loudly, by exception; the silent
+corruption in the instance that had just PASSED was found by following that failure with
+a hand check against exact arithmetic. A law suite's report is where the investigation
+starts, not where it ends.
 
 Admitted on source authority, awaiting a paid-for anchor (see the ledger's IOU section):
-test-your-tests (generator/shrinker validity), measure-the-distribution, and
-equivalence-not-structural-equality as the exported equality.
+test-your-tests (generator/shrinker validity) and equivalence-not-structural-equality as
+the exported equality.

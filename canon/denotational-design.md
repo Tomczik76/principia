@@ -36,6 +36,29 @@ Direct lineage: Strachey/Scott denotational semantics applied to *library* desig
   be trusted. (Hughes states the same requirement from the property-testing side;
   Elliott grounds it: it is the precondition for μ existing at all.)
 
+- **Naming the structure is what summons the falsifier.** House sharpening, evidenced.
+  Elliott's obligation is discharged by *checking* the morphism, and the cheapest check
+  you will ever get is the one the class already ships: claiming `Monoid`/`Order`/
+  `Traverse` is what lets the library's law suite (cats-laws + discipline, ScalaCheck's
+  `Arbitrary` at every instantiation the class needs) run at all. So the procedure has a
+  first step before μ: when a type turns out to have a canonical object or operation —
+  an identity plus an associative merge, a canonical ordering, a codec, a group action —
+  give it the NAMED instance rather than an ad-hoc helper, in the companion object so it
+  is canonical for resolution too. Verification is the floor; the specification is the
+  goal — APIs taking `using Monoid[A]` state the structure in the type, where callers and
+  generic code can both see it. A hand-written axiom list is the weaker substitute: it
+  re-derives the axioms faithfully and still inherits the author's generator, which is
+  the half that finds bugs.
+
+- **A refuted instance is a finding; delete the claim, not the test.** The corollary of
+  "a failing morphism check is a design signal." When the laws refuse an instance you
+  proposed, the two honest exits are to fix the operation or to withdraw the claim —
+  never to narrow the generator until the claim survives. Publishing a class whose
+  `combineAll` lies is worse than publishing nothing: generic consumers were promised the
+  algebra, and the narrowed generator is the record of you being told and choosing not to
+  hear it. Where the structure IS real but only on a bounded domain, say the bound at the
+  instance and pin it with a test that fails when the bound is lifted.
+
 - **The denotation is the specification; fast forms certify against it.** House
   sharpening, evidenced: keep the lawful instance as the executable meaning, and admit
   fused hot-path implementations only with a parity proof against it plus the measured
@@ -62,5 +85,18 @@ measured constants recorded — the paid instance of both the morphism obligatio
 this file's one deliberate relaxation of Elliott (representation-level overrides
 allowed, *certified*). That entry also carries the negative instance —
 `NoteType.equals` breaking semantic equality — which is bullet 4 failing in the wild.
+
+**The laws that brought their own generator (2026-08-19)** pays the two bullets added
+above. `Rational` already HAD its canonical structure — a hand-proved field, 15 green
+properties — but had never NAMED it. Naming it and taking cats-laws refuted one of the
+two instances proposed (a speculative multiplicative `CommutativeMonoid`, which overflowed
+folding ~37 products); following that refutation down found the type returning 1/2+⋯+1/53
+as 0.133 instead of 1.681 — silently, in the type whose entire purpose is exactness, on
+the ADDITIVE instance that had just passed its own law suite clean. The monoid was dropped
+rather than accommodated by a narrower generator; the group was kept with its real domain
+stated at the instance. Both halves in one change: the naming bought the falsifier, and
+the refusal was informative — including about a defect it did not itself detect.
+
 See `theorems-for-free.md` (where laws come from when polymorphism can supply them)
-and `how-to-specify-it.md` (how to generate against them).
+and `how-to-specify-it.md` (how to generate against them — and the generator-reach
+anchor the same case study pays there).

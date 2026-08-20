@@ -57,7 +57,10 @@ programs are polymorphic over them). Kiselyov's corpus is that decision procedur
   data, keeping the data canonical. So never choose final *for performance*; the
   performance is purchasable on either side, and true staging carries a deployment
   constraint (the compiler on the runtime classpath) that many targets — anything
-  compiled to JS/WASM — cannot meet.
+  compiled to JS/WASM — cannot meet. Fold-to-closures is itself conditional, not
+  universal: it pays where the program is fixed before its inputs arrive, and buys
+  nothing on a one-input traversal, which wants fusion instead — see
+  `data-and-codata.md` for the criterion and both paid instances.
 - **Inspectability is drawn at the binding line, not the initial/final line.** A final
   program restricted to applicative-shaped operations is exactly as inspectable as a
   free applicative: instantiate at a constant functor and fold. What blinds static

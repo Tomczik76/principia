@@ -206,9 +206,14 @@ story in two or three sentences, the principle it evidences, where the full reco
   the same codebase and is why it matters: `NoteType.equals` compares by pitch-class
   value while `letterIndex` distinguishes, so semantic equality fails, substitutivity
   fails with it, and lawful instance derivation for that type is blocked until it is
-  repaired. → *the lawful instance is the spec and fast forms certify against it;
-  exported equality must be equivalence of meaning or nothing built on the type is
-  trustworthy.*
+  repaired. The pair also fixes WHICH optimisation a hot path admits, read off the
+  signature: `Pulse` traversal has one input, so the fast forms FUSE; the bake-off's
+  `Pred` evaluation has two arriving at different times — tree at rule-set
+  construction, frame per check — so `Compile.pred` STAGES instead, and staging a
+  one-input traversal would only have allocated a closure tree to walk it once.
+  → *the lawful instance is the spec and fast forms certify against it; exported
+  equality must be equivalence of meaning or nothing built on the type is trustworthy;
+  stage or fuse by arrival time, not by taste.*
 - **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
   inline in the key-chain router AND in the JS facade's model-agreement switch — a
   future retune would have silently diverged the shipped frontend from the router.

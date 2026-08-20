@@ -55,8 +55,8 @@ line enters only by displacing one.
   DSL specifically, encode by the least fold-like interpreter: initial (data) and final
   (functions) are interconvertible for a fixed signature, so expressiveness never
   decides; whole-tree operations (inspection, search, normalization) are native only on
-  data, and speed is one fold-to-closures interpreter away
-  (`canon/data-and-codata.md`, `canon/tagless-final.md`).
+  data, and speed is one more interpreter away — closures when the program is fixed
+  before its inputs, fusion when not (`canon/data-and-codata.md`, `canon/tagless-final.md`).
 - **Know when a change leaves the ACID island.** A system is centralized while its whole
   state updates atomically; distributed the moment one call mutates state the transaction
   cannot reach — and every external API call IS a state mutation somewhere. Prefer designs

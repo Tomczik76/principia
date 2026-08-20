@@ -43,6 +43,34 @@ this file is admitted for what Welsh adds, not for that overlap.
   what makes "make it a data structure first" affordable in production rather
   than merely elegant.
 
+- **Which rung: stage when the program is fixed before its inputs arrive, fuse
+  when it is not.** House sharpening, evidenced — the ladder says optimisation
+  is a sequence of mechanical rewrites, not which rewrite a given interpreter
+  admits, and the two this corpus has paid for are not interchangeable.
+  STAGING splits a two-input interpreter by arrival time: `Compile.pred` takes
+  the predicate tree alone and returns `F => Boolean`, so the match on rule
+  structure runs once at rule-set construction instead of once per frame — and
+  the load-bearing detail is that the recursive calls sit OUTSIDE the returned
+  closure, since moving them inside rebuilds the interpreter with extra
+  allocation. FUSION collapses a one-input traversal: `Pulse.flatten` walks the
+  tree once into a builder rather than a generic fold plus `++`. Staging a
+  one-input function buys nothing — no early argument to specialise on, so the
+  closure tree is allocated only to be walked once. Read the criterion off the
+  signature: two arguments arriving at different times, or one. The staged
+  rung's price is that its residual closures go stale when the program changes,
+  so something must own rebuilding them.
+
+- **A compiler over data may rewrite its input; an interpreter made of
+  functions has no input to rewrite.** House sharpening, evidenced — the
+  staged rung's win is not only removed dispatch. `Compile.rule` runs `Pred.nnf`
+  before folding, and `Compile.sharedPass` expands one quantifier across a
+  whole rule set instead of re-enumerating per rule, which is where the 0.43×
+  came from. Both moves require SEEING the program, so the final encoding
+  reaches them only by reifying to data first. This is the performance-side
+  twin of "whole-tree operations are native only on data": normalisation,
+  shared-subexpression hoisting and reordering are whole-tree operations that
+  happen to be about speed.
+
 ## Do not import
 
 - **The Cats tutorial spine** (Monoid/Functor/Monad instances, the case
@@ -78,6 +106,11 @@ which is the strongest form the evidence could take:
 
 The derivation half is evidenced by the cata-as-spec pair: `Traverse[Pulse]`
 is the structural recursion the recursive `Pulse` type dictates, and the fused
-hot paths are certified against it. See `tagless-final.md` for the
-initial/final result this generalises, and `simple-made-easy.md` for why the
-construct table there does not transfer to Scala 3.
+hot paths are certified against it. That pair is also the fusion half of the
+rung criterion, and the bake-off's `Compile.scala` is the staging half — the
+same codebase, two interpreters optimised by different rewrites because
+`Pred` evaluation has two inputs arriving at different times and `Pulse`
+traversal has one. See `tagless-final.md` for the initial/final result this
+generalises, `denotational-design.md` for the parity obligation both fast
+forms owe, and `simple-made-easy.md` for why the construct table there does
+not transfer to Scala 3.

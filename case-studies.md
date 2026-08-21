@@ -1,7 +1,8 @@
 # Case studies — the evidence ledger
 
 Earned anchors, per project. This file is why the canon is not a quote collection: every
-rule in `core.md` should trace to at least one entry here that a real project paid for.
+rule in `core.md` traces to at least one entry here that a real project paid for, or is
+printed as an IOU below (`METHOD.md` rule 3 states the law; this is a pointer to it).
 When a new project adopts the canon, its paid-for defects get contributed back here —
 evidence compounds across projects instead of resetting per repo. Entries are terse: the
 story in two or three sentences, the principle it evidences, where the full record lives.
@@ -161,13 +162,14 @@ story in two or three sentences, the principle it evidences, where the full reco
 - **The rule-DSL bake-off (2026-08-14).** Design-it-twice executed as three BUILT spikes
   (initial GADT / tagless final / initial+staged-compile) over the same production rule
   slice, judged by measurement: all three encodings ran FASTER than the hand-written
-  rule they modeled (compiled-initial 2.72 ms vs production 7.22 ms — the
-  abstraction-costs-performance instinct falsified by a printed number); the tagless
-  rules' structural interpreters existed only via reification into the initial ADT
-  (proven as a passing test); the counterexample-generating interpreter was the workload
-  that separated the encodings; and the derived description exposed shipped prose drift
-  (a rule's hand-written description omitted two conditions its check enforced). Full
-  record: contrapunctus `docs/design/rule-dsl-bakeoff.md`. → *design it twice, as
+  rule they modeled at the granularity that ships (compiled-initial 2.72 ms vs production
+  7.22 ms — the abstraction-costs-performance instinct falsified by a printed number; see
+  the per-rule-vs-per-rule-set entry below for the granularity that reverses it); the
+  tagless rules' structural interpreters existed only via reification into the initial
+  ADT (proven as a passing test); the counterexample-generating interpreter was the
+  workload that separated the encodings; and the derived description exposed shipped
+  prose drift (a rule's hand-written description omitted two conditions its check
+  enforced). Full record: contrapunctus `docs/design/rule-dsl-bakeoff.md`. → *design it twice, as
   builds; measurement rule; initial/final choice (see canon/tagless-final.md).*
 - **The transposition-equivariance property (2026-08-15).** One ScalaCheck property —
   analysis under given keys commutes with the interval-group action on scores —
@@ -274,9 +276,11 @@ story in two or three sentences, the principle it evidences, where the full reco
   compile error scrolled past inside the captured text — a "green" that was never read.
   And two constants asserted from reasoning rather than computation were both wrong: a
   reduced denominator claimed as 840 (actually 5 — the numerator shared factors) and an
-  overflow boundary claimed at 16 coprime denominators (16 still fits; the wrap starts
-  silently after). Both were caught only by reading the log and recomputing against exact
-  arithmetic. → *a harness's success signal must be the thing under test, not the last
+  overflow boundary claimed at 16 coprime denominators (15 fits; 16 is exactly where
+  the answer stops being representable — 53# ≈ 3.26e19 against a `Long` ceiling of
+  9.22e18 — so the original claim was right and the correction was the defect). Both
+  were caught only by reading the log and recomputing against exact arithmetic.
+  → *a harness's success signal must be the thing under test, not the last
   process in the pipe; the measurement rule governs asserted constants too — compute them
   or do not assert them.*
 - **The Facade tuning copy (2026-08-15).** A swept HMM tuning pair `(W=6, α=0.25)` lived
@@ -383,18 +387,53 @@ story in two or three sentences, the principle it evidences, where the full reco
   keeps a repeat graceful; "this index is what makes a double award impossible rather
   than merely unlikely." → *a transaction is not a lock; constraint as enforcement,
   racing check as UX.*
-- **The quota twins.** One cap shape, two implementations: the audio-track cap locks the
-  owner row (`FOR UPDATE`) and makes the INSERT itself conditional, demoting its own
-  pre-check in writing to "an OPTIMISATION, not the enforcement" — while the free-tier
-  project cap remains a count in one session followed by an unconditional INSERT in
-  another, with no database backstop. The correct answer sits in a sibling file, written
-  later, by an author who spelled out why the other shape cannot work. → *a transaction
-  is not a lock; the racing check only shrinks the window; siblings diverge without
-  cross-session memory.*
+- **The quota twins (2026-08-14).** One cap shape, two implementations: the audio-track
+  cap locked the owner row (`FOR UPDATE`) and made the INSERT itself conditional,
+  demoting its own pre-check in writing to "an OPTIMISATION, not the enforcement" — while
+  the free-tier project cap was a count in one session followed by an unconditional
+  INSERT in another, with no database backstop. The correct answer sat in a sibling file,
+  written later, by an author who spelled out why the other shape cannot work. The digest
+  is what closed it: the divergence was written up at 18:09 and repaired 18 minutes later
+  (contrapunctus `2f552fb2`), the project cap taking the same lock-then-conditional-INSERT
+  shape against one shared `Users.lockRow`, so the two caps can no longer drift onto
+  different lock targets. → *a transaction is not a lock; the racing check only shrinks
+  the window; siblings diverge without cross-session memory — and a status claim about
+  live code is stale the moment someone acts on it, so date it and write it in the past
+  tense of when it was measured.*
 - **The dead identifier.** The instructions file directed edits at
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.
   → *DRY-for-facts applies to docs; anchors need the same review as code.*
+
+## Principia (this repo; the corpus reviewed against its own rules)
+
+- **The corpus review (2026-08-20).** The METHOD-prescribed review re-run after the
+  growth spurt: six reviewers on distinct dimensions, every finding handed to a refuter
+  instructed to kill it. 39 findings survived, 28 died, collapsing to ~20 defects. Three
+  results are worth keeping. **A correction pays the same toll as the claim it corrects:**
+  the green-that-was-a-pipe entry recorded an overflow boundary "claimed at 16 coprime
+  denominators (16 still fits)" — and the correction was the wrong one, since 53# ≈
+  3.26e19 exceeds `Long`'s 9.22e18 while 47# ≈ 6.15e17 does not, which is exactly what
+  the entry two bullets up and `RationalLawsSuite` both already pinned. Three passes over
+  one type, three overstatements, the third inside the entry teaching "compute them or do
+  not assert them." **Anchor rot has a timescale of minutes:** the quota-twins entry's
+  present-tense claim that the project cap had no backstop was false 18 minutes after it
+  was written — the digest itself provoked the repair — and it rotted in two files at once
+  because the canon file restated the fact it was already citing. **The budget is failing
+  in both directions:** `core.md` went 111 → 163 lines (+47%), 1,198 → 1,944 words (+62%),
+  with two of nine commits displacing line-for-line, seven adding with nothing ejected and
+  none ever shrinking it — while the same law was cited in `canon/value-of-values.md` as
+  the ground for refusing a candidate, and while paid lessons (the silence-half tags, the
+  watch-your-guard-fail rule) sit unpromoted because the budget is nominally closed. The
+  measurement rule's bias held again: every false surviving claim overstated reach — one
+  ledger entry cited as three, "every rule traces to evidence" against 5 printed IOUs,
+  four never-archived sources listed where five exist, nine minutes reported as "a few
+  hours" — and none understated, now four passes running. → *a correction is a reach claim
+  and pays the same evidence toll as the claim it corrects; a present-tense status claim
+  about live code is stale on arrival — date it and write it in the past tense of when it
+  was measured; a fact restated inside a file that already cites its source rots in both
+  copies at once; a law that is cited but not mechanized enforces nothing, and a closed
+  budget that does not close stops promotions without stopping growth.*
 
 ## IOUs — rules awaiting a paid-for anchor
 
@@ -404,12 +443,15 @@ for one of these, replace the IOU with the entry. Covers both `core.md` rules an
 bullets that ride on a source's own measurements.
 
 - Name the axis (the simple/easy distinction itself — its two corollaries have entries).
-- Design it twice / the from-scratch ideal.
+- The from-scratch ideal (design-it-twice itself is paid by the rule-DSL bake-off, which
+  executed it as three built spikes; only "end up where a from-scratch build would land"
+  is still owed).
 - Spend top-down authority on the least important decisions.
 - Define errors out of existence.
+- Pull complexity downward — the ABSORB half (a computed default the module decides).
+  Its exception clause is paid by the `persistence` prop (required parameter beats wrong
+  default); the absorbing half rides on Ousterhout alone.
 - Test your tests: generator and shrinker validity properties (Hughes).
-- Equivalence, not structural equality, as the exported equality of an abstract type
-  (Hughes).
 - Ask what an update destroys — accrete the fact, project the current view (Hickey, *The
   Value of Values*). Awaiting a defect where a question needed a second time point and the
   system had overwritten it. Held out of `core.md` for lack of both an anchor and a

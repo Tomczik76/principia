@@ -104,7 +104,11 @@ of work; queued separately). The eight-bug measurement is one example, one seedi
 import the direction (model-based ≫ postconditions; validity alone weak), not the
 magnitudes. And properties do not retire example tests wholesale: examples pin
 regressions cheaply and document intent, and locked regression baselines are a
-complementary oracle where no model exists.
+complementary oracle where no model exists — with the caveat two entries in the ledger
+paid for: a locked baseline is an oracle only while nobody writes prose justifying the
+number it pins. Both wrong-flag defects in the species engine were DEFENDED by pinned
+baselines whose comments had invented domain reasons for the wrong counts, so the
+baseline outlived the bug and argued for it.
 
 ## Agent-era note
 
@@ -140,6 +144,7 @@ corruption in the instance that had just PASSED was found by following that fail
 a hand check against exact arithmetic. A law suite's report is where the investigation
 starts, not where it ends.
 
-Admitted on source authority, awaiting a paid-for anchor (see the ledger's IOU section):
-test-your-tests (generator/shrinker validity) and equivalence-not-structural-equality as
-the exported equality.
+Test-your-tests (generator/shrinker validity) rides on Hughes's own measurements; the
+ledger's IOU section is the register of what this file still owes, and is the only place
+that membership is listed. (Equivalence-not-structural-equality is no longer among them —
+the cata-as-spec pair paid it, `NoteType.equals` and all.)

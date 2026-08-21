@@ -2,7 +2,9 @@
 
 A personal canon of software taste: classic talks and essays digested into decision
 procedures, priced for the coding-agent era, and backed by defects real projects paid
-for. Not a quote collection — every rule traces to evidence.
+for. Not a quote collection — every rule either traces to evidence or prints its debt:
+of the 23 rules in `core.md`, 18 name a `case-studies.md` entry, 3 carry a whole IOU
+there, and 2 are anchored in one half with the other half owed.
 
 ## Structure
 
@@ -35,7 +37,9 @@ a project pays for a new lesson, contribute the anchor back to `case-studies.md`
    grows freely; the always-on layer does not. (This is the repo's own surface-accounting
    rule applied to itself.)
 2. **No rule without evidence** — admission requires a `case-studies.md` entry a real
-   project paid for. Everything else waits in `QUEUE.md`.
+   project paid for. A rule may enter on source authority alone only as a printed IOU in
+   that file's IOU section, retired on first payment; an undigested source waits in
+   `QUEUE.md`. `METHOD.md` states the law; this is a pointer to it.
 
 ## Publishing note
 

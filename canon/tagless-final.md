@@ -110,6 +110,8 @@ interconvertibility structurally; counterexample generation as the discriminatin
 least-fold-like workload (reachable in final only via reify); the expression-problem
 prize scoring zero for the closed rule DSL, with exhaustiveness escalated to errors as
 the landed drift guard; compiled-initial measured fastest of everything including the
-hand-written production code (2.72 ms vs 7.22 ms), with true staging unavailable on the
+hand-written production code AT RULE-SET GRANULARITY (2.72 ms vs 7.22 ms) — the same
+encoding runs 1.52× SLOWER per single enriched rule, and rules ship in sets, which is the
+ledger's per-unit-of-shipping refinement — with true staging unavailable on the
 Scala.js/WASM target; and the effect-seam verdict (per-capability final algebras +
 intent ledger, not Free).

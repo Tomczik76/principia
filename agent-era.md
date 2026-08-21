@@ -39,11 +39,13 @@ codemods), while implicit magic is what they break.
 
 ## The empirical kicker
 
-The defects in `case-studies.md` that motivate these rules were committed *by agents* —
-see the hop-chain, audit-bias, and diverged-siblings entries in the ledger. The
-structural reason: agents have no cross-session memory, so anything that requires knowing
-"a twin of this exists elsewhere" — sync functions, hop lists, fact duplication — is
-precisely what they are worst at.
+The defects in `case-studies.md` that motivate these rules are agent-shaped, in two
+degrees: one records agent commission outright (the hop chain — "`barSpans` was dropped
+at three hops in one day — by agents"), and one records agent sessions failing to see a
+twin that already existed (the diverged siblings — "later agent sessions did not know the
+twins existed"). The structural reason: agents have no cross-session memory, so anything
+that requires knowing "a twin of this exists elsewhere" — sync functions, hop lists,
+fact duplication — is precisely what they are worst at.
 
 Hence the sharpest repricing: **tolerance for *pattern* duplication rises** (agents
 regenerate patterns cheaply, and periodic sweeps can unwind tangles), while **tolerance
@@ -69,7 +71,8 @@ be the counterweight: to make the simple path the easy path by putting it in con
   pass can re-inline and re-derive. Tangle-unwinding is maintenance, not archaeology.
 - **Design it N times** with a judge, not twice by hand.
 - **Instructions files are code.** They drift like code (dead identifiers, stale claims,
-  duplicated facts that diverge) and deserve adversarial review like code. A prose rule
-  an agent must remember is a compensating filter; where possible, move it into a hook,
-  a type, a constraint — the layer that owns it — and let the prose shrink to one line
-  naming the mechanism.
+  duplicated facts that diverge) and deserve adversarial review like code — which is the
+  agent-era reason for the retire-prose-into-mechanism rule stated in `METHOD.md`'s
+  consumption topology, not a second copy of it: a rule an agent must remember is a
+  compensating filter, and an agent is the reader who re-learns it from zero every
+  session.

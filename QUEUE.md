@@ -32,7 +32,7 @@
 6. **Fabio Labella (SystemFw) — the effect-systems treatises** ("the case for effect
    systems"; the shared-state-in-FP talks/gists). The strongest lesser-known-Scala-
    wizard material on WHY suspension buys compositionality — would deepen the
-   Effect.ts/cats-effect side of `constraints-liberate.md`'s detonate-late rule.
+   Effect.ts/cats-effect side of `canon/constraints-liberate.md`'s detonate-late rule.
    Admit with an effect-seam case study (the Contrapunctus backend TF seam, when
    built, is the natural anchor).
 
@@ -55,13 +55,14 @@
 ## Rejected as redundant (do not re-litigate without new evidence)
 
 - **Milewski, "Profunctor Optics: The Categorical Approach"** (Lambda World 2017;
-  transcript stays archived; was canon for a few hours on 2026-08-16). The best-read
-  rejection in this list: digested in full from the transcript, then demoted the same
-  day by the instrument it prompted. Measured grounds: ~90% of the talk landed in its
+  transcript stays archived; was canon for nine minutes on 2026-08-16 — `2ff9ff8`
+  00:57:05 to `bbccf87` 01:06:41). The best-read rejection in this list: digested in
+  full from the transcript, then demoted the same day by the instrument it prompted.
+  Measured grounds: ~90% of the talk landed in its
   own do-not-import section (the Yoneda/Tambara/Pastro–Street derivation), and of four
   imported bullets only the dimap decomposition had paid evidence — a rule the
   species-profunctor ANCHOR in `case-studies.md` already carries in its own tags; the
-  Yoneda bullet restated `tagless-final.md`'s initial/final license; the rest was
+  Yoneda bullet restated `canon/tagless-final.md`'s initial/final license; the rest was
   vocabulary. The talk derives optics encodings; the corpus uses bare `dimap`, once,
   certified, with no optics library. The territory's sources are now
   `canon/theorems-for-free.md` + `canon/denotational-design.md`, admitted the same day
@@ -76,8 +77,8 @@
   detonate-late rule applied to effects (execute at the last step, at the run boundary);
   its avoid-mocks testing payoff is achieved more directly by integration-testing against
   real dependencies.
-- **Moseley & Marks, "Out of the Tar Pit"** — the ancestor of half the corpus; reading it
-  after Hickey is re-derivation.
+- **Moseley & Marks, "Out of the Tar Pit"** — an ancestor of much of the corpus (the
+  fraction is not measured, so none is printed); reading it after Hickey is re-derivation.
 - **Wlaschin, "Designing with Types: Making Illegal States Unrepresentable"** — the
   slogan and its worked refactoring (record-of-optionals → union of legal states) are
   already core rules; the one genuinely additive part, the *counting procedure*, was

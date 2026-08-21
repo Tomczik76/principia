@@ -428,7 +428,15 @@ story in two or three sentences, the principle it evidences, where the full reco
   measurement rule's bias held again: every false surviving claim overstated reach — one
   ledger entry cited as three, "every rule traces to evidence" against 5 printed IOUs,
   four never-archived sources listed where five exist, nine minutes reported as "a few
-  hours" — and none understated, now four passes running. → *a correction is a reach claim
+  hours" — and none understated, now four passes running. The budget was the one finding
+  repaired as MECHANISM rather than wording: a displacement pass took `core.md` to
+  158 lines / 1,869 words — the 293-word properties bullet compressed to its decisions
+  with the `Cogen` and commutation-square derivations pushed to the canon files that
+  already carry them, and the budget sentence itself reduced to a pointer — and
+  `check-budget.sh` now pins the ceiling, so growth means raising a number in a diff and
+  saying what the always-on layer bought. Watched failing on both branches (over-ceiling,
+  and core.md missing — which exits 2 rather than passing) before being trusted.
+  → *a correction is a reach claim
   and pays the same evidence toll as the claim it corrects; a present-tense status claim
   about live code is stale on arrival — date it and write it in the past tense of when it
   was measured; a fact restated inside a file that already cites its source rots in both

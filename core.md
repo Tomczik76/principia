@@ -3,8 +3,8 @@
 The always-on distillate: decision procedures only, self-contained, importable into any
 project's CLAUDE.md via `@~/Dev/principia/core.md`. Full arguments live in
 `~/Dev/principia/canon/`; earned evidence in `~/Dev/principia/case-studies.md`; how
-entries get admitted in `~/Dev/principia/METHOD.md`. This file has a hard budget: a new
-line enters only by displacing one.
+entries get admitted in `~/Dev/principia/METHOD.md`, which states this file's hard
+budget; `check-budget.sh` enforces it.
 
 ## Arguing about designs
 
@@ -142,21 +142,16 @@ line enters only by displacing one.
   abstract model exists (measured strongest), metamorphic relations when it does not;
   validity invariants alone are weak. Where the structure is a NAMED algebra, claim the
   instance (`Monoid`, `Order`, `Traverse` — in the companion, so it is canonical for
-  resolution) and take the library's law suite instead of hand-listing axioms: the naming
-  is what makes the falsifier available, and a hand-written list re-derives the axioms
-  faithfully while still inheriting your generator, which is the half that finds bugs. If
-  the laws refuse the instance, withdraw the claim or fix the operation — never narrow the
-  generator until it passes. Lawful never implies coherent with the type's own `==`, and
-  that gap is where instances actually go wrong: an `Order.by` on a non-injective key
-  satisfies every order law while calling distinct values equal. One law does catch it —
-  substitutivity — and only if the `Cogen` you supply distinguishes more than the
-  instance does, since that is what lets the generator build a function separating two
-  values the instance calls equal. Check what your law suite is keyed on before believing
-  its green. A metamorphic relation is a commutation square
-  (transform-then-run == run-then-transform), and a polymorphic signature DONATES one —
-  the type cannot inspect what it abstracts over, so the square holds for free. Concrete
-  code that must read its values owes the same square instead: state it over the domain's
-  own symmetry and pay for it with a suite (`canon/theorems-for-free.md`). Jurisdiction: a property certifies the artifact,
+  resolution) and take the library's law suite: naming is what summons the falsifier, and
+  a hand-written axiom list still inherits your generator, which is the half that finds
+  bugs. If the laws refuse the instance, withdraw the claim or fix the operation — never
+  narrow the generator until it passes. Lawful never implies coherent with the type's own
+  `==`; the one law that reaches that gap, substitutivity, draws its function from the
+  `Cogen`, so a suite keyed on the instance under test goes green against a broken one —
+  check what yours is keyed on before believing it (`canon/denotational-design.md`).
+  A metamorphic relation is a commutation square: a polymorphic signature donates one for
+  free, and concrete code that must read its values owes the same square and pays with a
+  suite (`canon/theorems-for-free.md`). Jurisdiction: a property certifies the artifact,
   never the wiring — arrival is the e2e check's job.
 - **Guardrails do not tell you which way to go.** A passing suite says nothing broke,
   never that the shape is right. Reach for a structural fix when the failure is

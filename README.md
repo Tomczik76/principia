@@ -15,6 +15,7 @@ there, and 2 are anchored in one half with the other half owed.
 | `case-studies.md` | The evidence ledger — paid-for defects, per project | On demand |
 | `agent-era.md` | Original position: how these rules reprice under coding agents | On demand |
 | `METHOD.md` | How sources get digested and admitted; the core budget rule | When adding sources |
+| `check-budget.sh` | Enforces the `core.md` ceiling — run it before committing a core change | Every core edit |
 | `QUEUE.md` | Ranked mining list + rejected-as-redundant list | When adding sources |
 | `transcripts/` | Archived primary sources | Reference |
 
@@ -35,7 +36,9 @@ a project pays for a new lesson, contribute the anchor back to `case-studies.md`
 
 1. **`core.md` has a hard budget** — a new line enters only by displacing one. The canon
    grows freely; the always-on layer does not. (This is the repo's own surface-accounting
-   rule applied to itself.)
+   rule applied to itself.) Enforced by `./check-budget.sh`, which pins the ceiling: to
+   grow `core.md` you raise that number in the same commit and say what the context
+   bought. `METHOD.md` states the law.
 2. **No rule without evidence** — admission requires a `case-studies.md` entry a real
    project paid for. A rule may enter on source authority alone only as a printed IOU in
    that file's IOU section, retired on first payment; an undigested source waits in

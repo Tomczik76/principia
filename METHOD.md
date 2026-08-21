@@ -42,6 +42,15 @@ context cost in every consuming project forever. This is the repo's own surface-
 rule applied to itself, recursively. Expect to be tempted; the temptation is the easy
 axis.
 
+**The rule is `./check-budget.sh`, not this paragraph.** Prose could not hold it: between
+2026-08-14 and 2026-08-20 `core.md` went 111 → 163 lines and 1,198 → 1,944 words across
+nine commits, two of which displaced line-for-line and none of which shrank it — while
+this same law was being cited in `canon/value-of-values.md` as the ground for refusing a
+candidate. The script pins the ceiling, so growing the always-on layer now means raising
+a number in a diff and saying why in the commit message. That is the repo's own
+retire-a-prose-rule-into-a-mechanism move (below) applied to the rule most likely to be
+quietly broken by the person who wrote it.
+
 ## Consumption topology
 
 - `core.md` — always-on, imported by each project's CLAUDE.md (`@~/Dev/principia/core.md`).

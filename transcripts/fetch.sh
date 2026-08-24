@@ -24,15 +24,26 @@ done
 
 # Verify every file the manifest lists and is present on disk.
 status=0
-missing=0
-while IFS='|' read -r _ file sha _; do
+mirror_missing=0
+manual_missing=0
+while IFS='|' read -r _ file sha _origin refetch _; do
   file="$(echo "$file" | tr -d ' \`')"
   sha="$(echo "$sha" | tr -d ' \`')"
+  refetch="$(echo "$refetch" | sed 's/^ *//; s/ *$//')"
   [[ "$file" == *.md || "$file" == *.txt || "$file" == *.pdf || "$file" == *.ps ]] || continue
   [[ "$file" == "MANIFEST.md" ]] && continue
   if [[ ! -f "$file" ]]; then
-    echo "MISSING  $file (mirror only? clone the private mirror)"
-    missing=$((missing + 1))
+    case "$refetch" in
+      "mirror only")
+        echo "MISSING  $file — no stable upstream; clone the private mirror"
+        mirror_missing=$((mirror_missing + 1)) ;;
+      "landing page")
+        echo "MISSING  $file — fetch by hand from the Origin landing page in MANIFEST.md"
+        manual_missing=$((manual_missing + 1)) ;;
+      *)
+        echo "MISSING  $file — listed as auto-fetchable ($refetch); the download failed"
+        status=1 ;;
+    esac
     continue
   fi
   actual="$(shasum -a 256 "$file" | cut -d' ' -f1)"
@@ -47,5 +58,6 @@ while IFS='|' read -r _ file sha _; do
 done < MANIFEST.md
 
 echo
-[[ $missing -gt 0 ]] && echo "$missing file(s) must come from the private mirror."
+[[ $mirror_missing -gt 0 ]] && echo "$mirror_missing file(s) must come from the private mirror."
+[[ $manual_missing -gt 0 ]] && echo "$manual_missing file(s) must be fetched by hand from their landing page."
 exit $status

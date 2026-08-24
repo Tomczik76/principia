@@ -40,6 +40,19 @@ Not every invariant merits type-level encoding, complex input can need multi-pas
 and authorization checks may legitimately precede parsing. The principle ranks designs; it
 does not replace judgment.
 
+## What the essay overstates
+
+Haskell prices the advice. A refined type there is a newtype and a smart constructor; in a
+language where it also costs a codec, an `Eq`, a JSON instance and a decision about what
+crosses the wire, "just parse it at the boundary" understates the per-boundary bill — the
+surface-accounting gate in `wrong-abstractions-surface-area.md` still applies, and the
+refinements that pass it are the ones whose proof gets USED downstream. A refined type
+nobody destructures is a validator wearing a parser's signature: the check ran, the proof
+is carried, and no consumer is any freer for it. And "the fix direction is always upward"
+terminates only where someone owns the top; in a system whose boundaries are discovered
+rather than designed, the honest move is often to name the boundary first and pay for the
+parser second.
+
 ## Evidence
 
 See `../case-studies.md` — Contrapunctus: `PitchConversions` + its parity-tested TS twin

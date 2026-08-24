@@ -115,10 +115,15 @@ the fix was a partial unique index whose migration header states this file's the
 the check keeps a repeat graceful, "this index is what makes a double award impossible
 rather than merely unlikely") and **the quota twins** (the audio-track cap enforced with
 `FOR UPDATE` plus a conditional INSERT, its pre-check demoted in writing to "an
-OPTIMISATION, not the enforcement"; the project cap the same shape with no backstop).
+OPTIMISATION, not the enforcement"; its sibling project cap had no backstop at all until
+this digest was written — see the ledger entry for the status and the repair).
 The same codebase carries the safe patterns live: the `stripe_events` ledger decides by
 insert-and-branch on affected rows, never SELECT-then-INSERT; email verification
 serialises concurrent redemptions with `UPDATE … AND email_verified = FALSE`; handle
 claiming treats the unique index as the check and catches the violation. And no
-statement anywhere sets an isolation level — the whole app runs at Postgres's default
-Read Committed by omission, which is precisely the deployment Bailis measured.
+statement anywhere sets an isolation level: 18 `.transaction.use` sites in the backend,
+and a grep for `set transaction|isolation ?level|SERIALIZABLE|REPEATABLE READ|READ
+COMMITTED` over its Scala and SQL returns 4 hits — one Java `Serializable` marker trait
+and three comments, two of which name Read Committed as the assumed default. The whole
+app runs at Postgres's default by omission, which is precisely the deployment Bailis
+measured.

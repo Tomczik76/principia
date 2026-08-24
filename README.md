@@ -2,7 +2,9 @@
 
 A personal canon of software taste: classic talks and essays digested into decision
 procedures, priced for the coding-agent era, and backed by defects real projects paid
-for. Not a quote collection — every rule traces to evidence.
+for. Not a quote collection — every rule either traces to evidence or prints its debt:
+of the 23 rules in `core.md`, 18 name a `case-studies.md` entry, 3 carry a whole IOU
+there, and 2 are anchored in one half with the other half owed.
 
 ## Structure
 
@@ -13,6 +15,7 @@ for. Not a quote collection — every rule traces to evidence.
 | `case-studies.md` | The evidence ledger — paid-for defects, per project | On demand |
 | `agent-era.md` | Original position: how these rules reprice under coding agents | On demand |
 | `METHOD.md` | How sources get digested and admitted; the core budget rule | When adding sources |
+| `check-budget.sh` | Enforces the `core.md` ceiling — run it before committing a core change | Every core edit |
 | `QUEUE.md` | Ranked mining list + rejected-as-redundant list | When adding sources |
 | `transcripts/` | Archived primary sources | Reference |
 
@@ -33,9 +36,13 @@ a project pays for a new lesson, contribute the anchor back to `case-studies.md`
 
 1. **`core.md` has a hard budget** — a new line enters only by displacing one. The canon
    grows freely; the always-on layer does not. (This is the repo's own surface-accounting
-   rule applied to itself.)
+   rule applied to itself.) Enforced by `./check-budget.sh`, which pins the ceiling: to
+   grow `core.md` you raise that number in the same commit and say what the context
+   bought. `METHOD.md` states the law.
 2. **No rule without evidence** — admission requires a `case-studies.md` entry a real
-   project paid for. Everything else waits in `QUEUE.md`.
+   project paid for. A rule may enter on source authority alone only as a printed IOU in
+   that file's IOU section, retired on first payment; an undigested source waits in
+   `QUEUE.md`. `METHOD.md` states the law; this is a pointer to it.
 
 ## Publishing note
 

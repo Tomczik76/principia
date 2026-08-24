@@ -9,8 +9,8 @@ montage) live in the private mirror repo `Tomczik76/principia-transcripts`.
 
 | File | SHA-256 | Origin | Refetch |
 |---|---|---|---|
-| `hickey-value-of-values-jaxconf-2012.md` | `30c4b6144f7ed6565505c038d8ef0eff7883708b5d21bbaf61d17238bcd01dde` | matthiasn/talk-transcripts, `Hickey_Rich/ValueOfValues-mostly-text.md` (JaxConf 2012) | URL |
-| `bailis-feral-concurrency-control-sigmod-2015.pdf` | `97438aa0e5149f719d72d8fadb1cfbf671247acd9e5e7c3831b1265510c0d809` | bailis.org author version (SIGMOD 2015, DOI 10.1145/2723372.2737784) | URL |
+| `hickey-value-of-values-jaxconf-2012.md` | `30c4b6144f7ed6565505c038d8ef0eff7883708b5d21bbaf61d17238bcd01dde` | matthiasn/talk-transcripts, `Hickey_Rich/ValueOfValues-mostly-text.md` (JaxConf 2012) | fetch.sh |
+| `bailis-feral-concurrency-control-sigmod-2015.pdf` | `97438aa0e5149f719d72d8fadb1cfbf671247acd9e5e7c3831b1265510c0d809` | bailis.org author version (SIGMOD 2015, DOI 10.1145/2723372.2737784) | fetch.sh |
 | `hughes-how-to-specify-it-tfp2019.pdf` | `125cd575d70272ab4293f507c9c4bc86ce2ed00d138bbf2467888a5d671bb613` | open-access author version, research.chalmers.se/publication/517894 (LNCS 12053) | landing page |
 | `bjarnason-constraints-liberate-scala-world-2015.txt` | `11005e72f3bd4a34495e0641f825e92decf2e8a16cbb0bf7b470488c6d6df473` | auto-generated captions; video youtube.com/watch?v=GqmsQeSzMdw (Scala World 2015) | mirror only |
 | `bjarnason-composing-programs-scala-exchange-2017.txt` | `67743e84982b284eb7c1e759a83f29128f3b30898b41017731e298a4ba9027a7` | auto-generated captions; Scala eXchange 2017 closing keynote (skillsmatter.com/skillscasts/10746) | mirror only |
@@ -22,7 +22,13 @@ montage) live in the private mirror repo `Tomczik76/principia-transcripts`.
 | `wadler-theorems-for-free-fpca-1989.ps` | `b180809e5c4c5b937d6acc7e19d05c7483ff81ca114fdb7e675d3bc18a7304e0` | author's copy, FPCA 1989 | fetch.sh |
 | `elliott-denotational-design-type-class-morphisms-2009.pdf` | `8b72780b5fb9056a70cc949b8611defa7bd7146d7b04076ee8e37da941732e24` | author's copy, conal.net, 2009 (2016 revision) | fetch.sh |
 
-Sources cited by URL only, never archived: Hickey *Simple Made Easy* (matthiasn repo),
+Sources cited by URL only, never archived — 5 of the 15 distinct sources the 13 canon
+files cite (the other 10 are archived above; the table's 12 rows exceed that because
+Bjarnason's 2017 keynote has two files and Milewski is archived but no longer canon).
+Re-derive by reading the `**Source:**` block of each `canon/*.md`:
+Kiselyov/Carette–Kiselyov–Shan *Typed Tagless Final Interpreters* (okmij
+lecture notes, the Böhm–Berarducci page, the JFP 2009 paper — three URLs, one source),
+Hickey *Simple Made Easy* (matthiasn repo),
 King *Parse, Don't Validate* (lexi-lambda.github.io), Metz *The Wrong Abstraction*
 (sandimetz.com), Welsh *Functional Programming Strategies in Scala with Cats*
 (scalawithcats.com — a living book, so a checksum would pin a revision rather than

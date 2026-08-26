@@ -65,4 +65,5 @@ Elliott, *Denotational Design with Type Class Morphisms* ·
 Kiselyov, *Typed Tagless-Final Interpreters* + Welsh, *Functional Programming
 Strategies in Scala with Cats* ·
 Bailis et al., *Feral Concurrency Control* + Kleppmann, *Transactions: Myths, Surprises
-and Opportunities*.
+and Opportunities* · Codd, *A Relational Model of Data for Large Shared Data Banks* +
+Kent, *A Simple Guide to Five Normal Forms in Relational Database Theory*.

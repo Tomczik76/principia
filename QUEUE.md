@@ -17,31 +17,19 @@
    Correctness checks belong at the endpoints; reliability in the middle is only an
    optimization. Unifies two things the corpus already believes separately: webhook
    fail-closed seams and red-e2e-first testing are both end-to-end arguments. Canon-tier.
-3. **William Kent — "A Simple Guide to Five Normal Forms in Relational Database Theory"
-   (CACM 26(2), 1983),** with Codd's "A Relational Model of Data for Large Shared Data
-   Banks" (1970) as companion. The origin of "one fact in one place" and the only readable
-   derivation of 1NF-5NF; Codd supplies the algebra the normal forms are normal with
-   respect to. Unusually cheap to digest — two short papers, both with stable public URLs.
-   The territory is ALREADY PAID: `core.md`'s "Normalize by default; denormalize against a
-   number" entered on the key-change duality and the points cache in `case-studies.md`,
-   not on source authority, so this digest owes DEPTH (which update anomaly each form
-   removes; when 4NF/5NF actually bite; what normalization costs a read path) rather than
-   admission. Measure the delta before writing: `core.md` already carries one canonical
-   representation, make-broken-data-unreachable and DRY-is-for-facts, and METHOD rule 2
-   says a mostly-restating source gets one paragraph or nothing.
-4. **Hyrum's Law.** Anything you expose gets depended on; Ousterhout endorses it in the
+3. **Hyrum's Law.** Anything you expose gets depended on; Ousterhout endorses it in the
    Google talk Q&A ("applications find every crevice and sink their roots"). Small;
    admit only with a paid-for anchor (candidate exists: a hook exported from a layout
    module solely so a test could call it — which then became load-bearing).
-5. **Richard Cook — "How Complex Systems Fail."** The operations axis the corpus lacks
+4. **Richard Cook — "How Complex Systems Fail."** The operations axis the corpus lacks
    (catastrophe requires multiple small failures; every defense is a new failure source;
    hindsight bias). Admit when an ops-shaped case study earns it.
-6. **Hughes — "Experiences with QuickCheck: Testing the Hard Stuff and Staying Sane."**
+5. **Hughes — "Experiences with QuickCheck: Testing the Hard Stuff and Staying Sane."**
    The stateful/concurrent complement to the digested "How to Specify It!"
    (`canon/how-to-specify-it.md` is scoped to pure functions by design): operation
    sequences against a state-machine model, race detection. Admit when a stateful-PBT
    case study earns it.
-7. **Fabio Labella (SystemFw) — the effect-systems treatises** ("the case for effect
+6. **Fabio Labella (SystemFw) — the effect-systems treatises** ("the case for effect
    systems"; the shared-state-in-FP talks/gists). The strongest lesser-known-Scala-
    wizard material on WHY suspension buys compositionality — would deepen the
    Effect.ts/cats-effect side of `canon/constraints-liberate.md`'s detonate-late rule.

@@ -21,9 +21,11 @@ montage) live in the private mirror repo `Tomczik76/principia-transcripts`.
 | `milewski-profunctor-optics-lambda-world-2017.txt` | `134a92afcc048d9d002de47c8d9681cda04c374cc2bc623be9977ed7544c242e` | auto-generated captions; Lambda World 2017 (Cádiz) | mirror only |
 | `wadler-theorems-for-free-fpca-1989.ps` | `b180809e5c4c5b937d6acc7e19d05c7483ff81ca114fdb7e675d3bc18a7304e0` | author's copy, FPCA 1989 | fetch.sh |
 | `elliott-denotational-design-type-class-morphisms-2009.pdf` | `8b72780b5fb9056a70cc949b8611defa7bd7146d7b04076ee8e37da941732e24` | author's copy, conal.net, 2009 (2016 revision) | fetch.sh |
+| `kent-five-normal-forms-1983.html` | `bcc5b08a4937430bd6710a926ea6a9dca9328d877bc04920c39a6571b6c5d86d` | author's own copy, bkent.net/Doc/simple5.htm (CACM 26(2), Feb. 1983, 120-125; also IBM TR03.159, 1981) | fetch.sh |
+| `codd-relational-model-cacm-1970.pdf` | `fa2579f427a4da68466ef159a3ae0c3c1fe4eafec60f73c9f2f40378a65d8ef9` | course mirror, seas.upenn.edu/~zives/03f/cis550/codd.pdf (CACM 13(6), June 1970, 377-387; DOI 10.1145/362384.362685) — no author copy exists; ACM's own PDF is 403 to `curl` | fetch.sh |
 
-Sources cited by URL only, never archived — 5 of the 15 distinct sources the 13 canon
-files cite (the other 10 are archived above; the table's 12 rows exceed that because
+Sources cited by URL only, never archived — 5 of the 17 distinct sources the 14 canon
+files cite (the other 12 are archived above; the table's 14 rows exceed that because
 Bjarnason's 2017 keynote has two files and Milewski is archived but no longer canon).
 Re-derive by reading the `**Source:**` block of each `canon/*.md`:
 Kiselyov/Carette–Kiselyov–Shan *Typed Tagless Final Interpreters* (okmij

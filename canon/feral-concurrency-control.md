@@ -109,14 +109,18 @@ controller, and an agent is the limit case of that author.
 
 ## Evidence
 
-See `../case-studies.md` — Contrapunctus: **the double award** (an app-level "already
-awarded?" check inside a transaction raced anyway; duplicate rows reached production;
-the fix was a partial unique index whose migration header states this file's thesis —
-the check keeps a repeat graceful, "this index is what makes a double award impossible
-rather than merely unlikely") and **the quota twins** (the audio-track cap enforced with
-`FOR UPDATE` plus a conditional INSERT, its pre-check demoted in writing to "an
-OPTIMISATION, not the enforcement"; its sibling project cap had no backstop at all until
-this digest was written — see the ledger entry for the status and the repair).
+See `../case-studies.md` — Contrapunctus: **the double award** (duplicate rows reached
+production; the fix was a partial unique index whose migration header states this file's
+thesis — the check keeps a repeat graceful, "this index is what makes a double award
+impossible rather than merely unlikely"). Read the corrected entry, not this file's
+first version of it: the ledger described that incident for months as a check that raced
+inside a transaction, and the fix commit says one path ran the award block with no check
+and the other with no transaction at all. It pays the constraint-beats-check half of this
+file and not the write-skew half — for which the paid anchor here is **the quota twins**
+(the audio-track cap enforced with `FOR UPDATE` plus a conditional INSERT, its pre-check
+demoted in writing to "an OPTIMISATION, not the enforcement"; its sibling project cap had
+no backstop at all until this digest was written — see the ledger entry for the status and
+the repair).
 The same codebase carries the safe patterns live: the `stripe_events` ledger decides by
 insert-and-branch on affected rows, never SELECT-then-INSERT; email verification
 serialises concurrent redemptions with `UPDATE … AND email_verified = FALSE`; handle

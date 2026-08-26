@@ -58,13 +58,13 @@ budget; `check-budget.sh` enforces it.
   data, and speed is one more interpreter away — closures when the program is fixed
   before its inputs, fusion when not (`canon/data-and-codata.md`, `canon/tagless-final.md`).
 - **Normalize by default; denormalize against a number.** A column derivable from others
-  in its row is a second spelling free to disagree, and "the write path keeps them in
-  sync" is discipline, not a mechanism — the transitional pair outlives the migration
-  written to retire it. Store what the derivation cannot produce, or only the rows where
-  the stored value DISAGREES with it. When a measured read cost buys a copy, the copy owes
-  an enforcing mechanism — a generated column, a `CHECK` pairing it to its source, one
-  writer — because drift surfaces as wrong numbers already served, and the repair
-  migration usually leaves them.
+  in its row is a second spelling free to disagree; "the write path keeps them in sync" is
+  discipline, not a mechanism, and the pair outlives the migration written to retire it.
+  Store only what the derivation cannot produce, or only the disagreeing rows. A copy
+  bought by a measured read cost owes a mechanism rebuilding it from a live source:
+  recompute on write, a generated column, a `CHECK` (`canon/relational-model.md`). The
+  test is destruction — what you cannot drop and rebuild was never a copy but the record,
+  promoted without anyone deciding.
 - **Know when a change leaves the ACID island.** A system is centralized while its whole
   state updates atomically; distributed the moment one call mutates state the transaction
   cannot reach — and every external API call IS a state mutation somewhere. Prefer designs

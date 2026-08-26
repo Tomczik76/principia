@@ -379,14 +379,21 @@ story in two or three sentences, the principle it evidences, where the full reco
   breaks of the TS twin were each caught. → *one parser per boundary (the per-platform
   variant); guards must fail when they cannot find their anchor; a passing guard proves
   nothing until you have watched it fail; parity certifies agreement, never correctness.*
-- **The double award (2026-07-27).** Community-vote toggles minted duplicate
-  `point_events`: the app-level "already awarded?" check ran inside a transaction and
-  still raced, and the inflated totals reached production (the fix migration leaves them
-  in place, and says so). Fixed twice in one day — votes, then exercise republish — each
-  time by a partial unique index whose header states the rule: the in-transaction check
-  keeps a repeat graceful; "this index is what makes a double award impossible rather
-  than merely unlikely." → *a transaction is not a lock; constraint as enforcement,
-  racing check as UX.*
+- **The double award (2026-07-27; mechanism corrected 2026-08-25).** Community-vote
+  toggles minted duplicate `point_events`, and the inflated totals reached production.
+  This entry read for months as a write-skew story — "the check ran inside a transaction
+  and still raced" — and the fix commit (contrapunctus `e2ea2e5e`) says otherwise on both
+  paths: `vote` "ran the award block unconditionally after the vote mutation — including
+  the toggle-OFF branch," so there was no check to race, and `toggleSolutionUpvote` "ran
+  as FIVE separate pool checkouts with no transaction," so there was no transaction to
+  race inside. The unguarded path could not have been guarded anyway — see *the nameless
+  actor* below, which is the reason. Fixed twice in one day — votes, then exercise
+  republish — each time by a partial unique index whose header states the rule: the
+  in-transaction check keeps a repeat graceful; "this index is what makes a double award
+  impossible rather than merely unlikely." → *constraint as enforcement, racing check as
+  UX; a transaction is not a lock (the rule stands, and is paid by the quota twins below
+  — this incident pays the first half only). And: an anchor is code. This one carried a
+  plausible diagnosis nobody had checked against the commit.*
 - **The quota twins (2026-08-14).** One cap shape, two implementations: the audio-track
   cap locked the owner row (`FOR UPDATE`) and made the INSERT itself conditional,
   demoting its own pre-check in writing to "an OPTIMISATION, not the enforcement" — while
@@ -417,18 +424,43 @@ story in two or three sentences, the principle it evidences, where the full reco
   ordinal, since an agreeing list is a second copy of the bar index. → *normalize by
   default — a transitional second spelling is a permanent one; store what the derivation
   cannot produce; one canonical representation, derive the rest.*
-- **The points cache that could not be repaired (2026-03-31 / 2026-07-27).** The double
-  award, above, from the cache side. `users.total_points` is a denormalized aggregate over
-  `point_events` — V11 says so in its header ("denormalized for fast reads") — maintained
-  by a single application `UPDATE users SET total_points = ...`
-  (`backend/.../db/PointEvents.scala`), with no trigger, no generated column and no
-  constraint tying it to the events it sums. The partial unique index that landed the same
-  day stopped new duplicates; it could not undo the ones already folded into the cache, and
-  the fix migration left the inflated totals in place. A leaderboard reading `SUM` over the
-  fact table would have healed the moment the duplicate events were deleted. The copy is
-  what made the drift permanent. → *denormalize against a number, and the copy then owes an
-  enforcing mechanism — a projection maintained by discipline cannot be healed by fixing
-  the facts it projects.*
+- **The two caches (2026-03-31 / 2026-07-27 / 2026-08-25).** Two denormalized aggregates
+  of identical shape, opposite repairability, and the difference is invisible in either
+  column. `users.total_points` is a cache of `point_events` that `PointsService` RECOMPUTES
+  on every write rather than incrementing — `syncUserTotal` reads
+  `COALESCE(SUM(points), 0)` and writes the result — and the service says why in a doc
+  comment: "that is what keeps the total reconstructible after a retraction as well as an
+  award." Drop it and it rebuilds. `student_lesson_work.best_score` and `attempt_count`
+  (V55) are maintained by `GREATEST(best_score, …)` and `attempt_count + 1`
+  (`db/Classes.scala:408-409`) — increment, never recompute — and the per-attempt ledger
+  they would be rebuilt from, `student_lesson_attempts` (V7), stopped being written when V9
+  "replaces the multi-attempt model with a single save/submit model": `Classes.insertAttempt`
+  has **zero production callers** (the only other hits are a private helper in one test
+  suite), while the table is still deleted from and counted during account deletion. Those
+  two columns cannot be rebuilt from anything. They are not a cache of the ledger; they ARE
+  the record, promoted eight migrations earlier by a change in a different file that nobody
+  connected to them. *This entry previously read "the points cache that could not be
+  repaired" and concluded that the copy made the drift permanent. That was wrong at source:
+  the copy heals, and what left the inflated totals in production was a product decision —
+  V64: "clawing back points users can already see is a product decision, not a migration."*
+  → *a copy you cannot rebuild was never a copy; the test on a derived store is whether its
+  source is still written; denormalize against a number, and give the copy a live source.*
+- **The nameless actor (2026-07-27 / V64).** `point_events` recorded who RECEIVED an award
+  (`user_id`) and what it was FOR (`reference_id`), but not who CAUSED it. Both parties are
+  users; only one had a name. The migration states the consequence as an expressiveness
+  failure, not a redundancy: "an award had no identity," so idempotency "could only be asked
+  as 'has C ever been paid for an upvote on E?', which is true the moment ANY voter
+  upvotes" — and therefore "the only guard writable against this schema would also have
+  blocked the second legitimate voter." That is why the double award above had no guard: not
+  an oversight, an unsayable sentence. The table violated no normal form; every column stated
+  a fact about the whole key and nothing else, and the fix was not a decomposition but
+  `ADD COLUMN actor_id` plus naming the two roles. The schema then reasons from the name:
+  V64 notes that V11/V15 could key on `(user_id, reference_id)` alone "only because the
+  recipient IS the actor for those two," V65 restates it to justify three columns for a
+  self-earned award, and `PointsService.actorKey` carries a doc comment stating both failure
+  directions. → *name the role or the relation cannot state its fact; a missing participant
+  is not a normal-form defect and no normal form will find it; the guard you cannot write is
+  the diagnostic.*
 - **The dead identifier.** The instructions file directed edits at
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.
@@ -496,6 +528,11 @@ bullets that ride on a source's own measurements.
 - Policies don't compose but values do — a locking or cloning protocol is interface, and
   it is the part of the interface that evaporates under composition (Hickey). Awaiting a
   defect paid at a composite, not at a leaf.
+- The connection trap (Codd 1970 §2.1.4, via `canon/relational-model.md`). Following
+  A → B → C and reporting the result as the A–C relation is valid only where A–C IS the
+  natural composition of the two, and "for all time" — reachability is not a relation.
+  Awaiting a defect where a traversal answered a question no edge in the graph states
+  (an access check computed by path-following is the shape to watch).
 - Fabrication cost as the precondition on preferring properties: a generator for a
   place-shaped API is mostly setup code that rebuilds a world, so the property certifies
   the fixture too (Hickey, sharpening Hughes). Awaiting a case where generator setup cost,

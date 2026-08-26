@@ -13,6 +13,8 @@ declare -A urls=(
   [bailis-feral-concurrency-control-sigmod-2015.pdf]="http://www.bailis.org/papers/feral-sigmod2015.pdf"
   [wadler-theorems-for-free-fpca-1989.ps]="https://homepages.inf.ed.ac.uk/wadler/papers/free/free.ps"
   [elliott-denotational-design-type-class-morphisms-2009.pdf]="http://conal.net/papers/type-class-morphisms/type-class-morphisms.pdf"
+  [kent-five-normal-forms-1983.html]="http://www.bkent.net/Doc/simple5.htm"
+  [codd-relational-model-cacm-1970.pdf]="https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf"
 )
 
 for f in "${!urls[@]}"; do
@@ -30,7 +32,7 @@ while IFS='|' read -r _ file sha _origin refetch _; do
   file="$(echo "$file" | tr -d ' \`')"
   sha="$(echo "$sha" | tr -d ' \`')"
   refetch="$(echo "$refetch" | sed 's/^ *//; s/ *$//')"
-  [[ "$file" == *.md || "$file" == *.txt || "$file" == *.pdf || "$file" == *.ps ]] || continue
+  [[ "$file" == *.md || "$file" == *.txt || "$file" == *.pdf || "$file" == *.ps || "$file" == *.html ]] || continue
   [[ "$file" == "MANIFEST.md" ]] && continue
   if [[ ! -f "$file" ]]; then
     case "$refetch" in

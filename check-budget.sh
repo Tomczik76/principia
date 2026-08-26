@@ -15,8 +15,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-CEILING_LINES=158
-CEILING_WORDS=1869
+CEILING_LINES=166
+CEILING_WORDS=1976
 
 if [[ ! -f core.md ]]; then
   # A guard that cannot find its anchor must fail, not pass.

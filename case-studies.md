@@ -400,6 +400,35 @@ story in two or three sentences, the principle it evidences, where the full reco
   the window; siblings diverge without cross-session memory — and a status claim about
   live code is stale the moment someone acts on it, so date it and write it in the past
   tense of when it was measured.*
+- **The key-change duality (2026-05-12, still open).** `key_changes` was added to four
+  tables as the modulating-key model, backfilled from `tonic_idx`/`scale_name` as a
+  one-entry list at beat 0, and left nullable behind a written plan: a later migration
+  tightens it to NOT NULL, another drops the legacy columns. Neither has come. Sixteen
+  migrations and three months on (V54 → V70; contrapunctus HEAD 2026-08-20) both spellings
+  are live, `key_changes[0]` is free to disagree with `tonic_idx`/`scale_name`, and the
+  agreement is maintained by application discipline — V54's own header is where the plan
+  is written, and V69's is where it is admitted unpaid. The next migration into the same
+  territory refused the shape and said why: V69 stores NO synthetic single-run bar map
+  (NULL means uniform, so there is no second state to sync), deliberately does not store
+  `tsTop` because `span * tsBottom` derives it, DOES store `bar_count` because the final
+  run has no end and the runs genuinely cannot bound the piece, and pins the pair it
+  stores with a `CHECK` instead of defending against half a map in every reader. V70
+  sharpens it once more: a printed bar label is stored only where it DISAGREES with the
+  ordinal, since an agreeing list is a second copy of the bar index. → *normalize by
+  default — a transitional second spelling is a permanent one; store what the derivation
+  cannot produce; one canonical representation, derive the rest.*
+- **The points cache that could not be repaired (2026-03-31 / 2026-07-27).** The double
+  award, above, from the cache side. `users.total_points` is a denormalized aggregate over
+  `point_events` — V11 says so in its header ("denormalized for fast reads") — maintained
+  by a single application `UPDATE users SET total_points = ...`
+  (`backend/.../db/PointEvents.scala`), with no trigger, no generated column and no
+  constraint tying it to the events it sums. The partial unique index that landed the same
+  day stopped new duplicates; it could not undo the ones already folded into the cache, and
+  the fix migration left the inflated totals in place. A leaderboard reading `SUM` over the
+  fact table would have healed the moment the duplicate events were deleted. The copy is
+  what made the drift permanent. → *denormalize against a number, and the copy then owes an
+  enforcing mechanism — a projection maintained by discipline cannot be healed by fixing
+  the facts it projects.*
 - **The dead identifier.** The instructions file directed edits at
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.

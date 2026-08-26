@@ -3,7 +3,7 @@
 A personal canon of software taste: classic talks and essays digested into decision
 procedures, priced for the coding-agent era, and backed by defects real projects paid
 for. Not a quote collection — every rule either traces to evidence or prints its debt:
-of the 23 rules in `core.md`, 18 name a `case-studies.md` entry, 3 carry a whole IOU
+of the 24 rules in `core.md`, 19 name a `case-studies.md` entry, 3 carry a whole IOU
 there, and 2 are anchored in one half with the other half owed.
 
 ## Structure

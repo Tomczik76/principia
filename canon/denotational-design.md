@@ -111,7 +111,10 @@ as 0.133 instead of 1.681 — silently, in the type whose entire purpose is exac
 the ADDITIVE instance that had just passed its own law suite clean. The monoid was dropped
 rather than accommodated by a narrower generator; the group was kept with its real domain
 stated at the instance. Both halves in one change: the naming bought the falsifier, and
-the refusal was informative — including about a defect it did not itself detect.
+the refusal was informative — including about a defect it did not itself detect. The
+next day the operations were redefined so the domain stopped being a caveat: overflow is
+redone in BigInt, so every representable result is exact and only an unrepresentable one
+throws (contrapunctus `5c9a8663`).
 
 **The lawful order that dropped scale degrees (2026-08-20)** pays the which-knob-arms-the-
 coherence-law bullet, and is the sharper half of the pair. `Order[AlteredScaleDegree]` satisfied every order law

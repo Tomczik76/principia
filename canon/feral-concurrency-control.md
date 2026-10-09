@@ -121,7 +121,8 @@ The same codebase carries the safe patterns live: the `stripe_events` ledger dec
 insert-and-branch on affected rows, never SELECT-then-INSERT; email verification
 serialises concurrent redemptions with `UPDATE … AND email_verified = FALSE`; handle
 claiming treats the unique index as the check and catches the violation. And no
-statement anywhere sets an isolation level: 18 `.transaction.use` sites in the backend,
+statement anywhere sets an isolation level: 15 `.transaction.use` sites in the backend's
+main sources (this line said 18 until 2026-10-08; it was 15 when written too),
 and a grep for `set transaction|isolation ?level|SERIALIZABLE|REPEATABLE READ|READ
 COMMITTED` over its Scala and SQL returns 4 hits — one Java `Serializable` marker trait
 and three comments, two of which name Read Committed as the assumed default. The whole

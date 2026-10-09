@@ -28,7 +28,10 @@
    The stateful/concurrent complement to the digested "How to Specify It!"
    (`canon/how-to-specify-it.md` is scoped to pure functions by design): operation
    sequences against a state-machine model, race detection. Admit when a stateful-PBT
-   case study earns it.
+   case study earns it. Candidate since 2026-09-25: Contrapunctus's undo-history
+   property (random sequences of every store action against a model of both history
+   stacks, each action's reach asserted) found #18, #108 and #106; digest the source
+   before admitting it.
 6. **Fabio Labella (SystemFw) — the effect-systems treatises** ("the case for effect
    systems"; the shared-state-in-FP talks/gists). The strongest lesser-known-Scala-
    wizard material on WHY suspension buys compositionality — would deepen the

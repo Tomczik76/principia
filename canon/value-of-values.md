@@ -144,11 +144,13 @@ argument loses harder in 2026 than it did in 2012.
 
 ## Admission status
 
-Nothing from this digest enters `core.md` yet, on two independent grounds. **No anchor:**
-METHOD rule 3 requires a paid-for defect, and the ledger's nearest entries (the three
-crossings, the clobbered sandbox save) are already spent on other rules — reusing them
-here would be the reach overstatement this repo measures in others. **No displacement:**
-the core budget requires ejecting a line, and no current line is weaker than the candidate.
+Nothing from this digest is in `core.md`. It was held out on two independent grounds, and
+as of 2026-10-08 one is gone. **Anchor: paid.** Contrapunctus #128 (the ledger's "save
+that forgot what it sent") is a question that needed two time points, what was sent and
+what is shown, in a system that kept one; and #18 ("the snapshot that copied one level
+deep") pays the policies-don't-compose bullet. **No displacement:** the core budget still
+requires ejecting a line, and `core.md` has 0 headroom. Promotion is now a budget
+decision, not an evidence one.
 
 The candidate, recorded so a future session need not re-derive it:
 
@@ -157,11 +159,13 @@ The candidate, recorded so a future session need not re-derive it:
 > fact, project the current view. Place-orientation is free only where the past has no
 > decision value.
 
-Admit it when a project pays for the loss of a fact it needed a second time point to
-answer. Until then the rule lives here and the debt is printed in the ledger's IOU list.
-
 ## Evidence
 
-None yet — see the IOU entries in `../case-studies.md`. The nearest paid-for material
-(`stripe_events`, Bedrock persist-before-parse, the clobbered sandbox save) evidences the
-ACID-island and explicit/implicit rules and is not re-spent here.
+`../case-studies.md`, Contrapunctus: **the save that forgot what it sent** (#128) pays
+the PLOP detector and the fact-log bullet: the fix keeps the sent value and derives
+dirtiness from it rather than overwriting the baseline. **The snapshot that copied one
+level deep** (#18) pays values-aggregate-to-values: a cloning policy written for one level
+of nesting failed one level down, and the fix was to hold frozen values. The older
+material (`stripe_events`, the offline Bedrock persist-before-parse, the clobbered sandbox
+save) still evidences the ACID-island and explicit/implicit rules and is not re-spent
+here. The fabrication-cost bullet is still an IOU.

@@ -64,8 +64,10 @@ this file is admitted for what Welsh adds, not for that overlap.
   functions has no input to rewrite.** House sharpening, evidenced — the
   staged rung's win is not only removed dispatch. `Compile.rule` runs `Pred.nnf`
   before folding, and `Compile.sharedPass` expands one quantifier across a
-  whole rule set instead of re-enumerating per rule, which is where the 0.43×
-  came from. Both moves require SEEING the program, so the final encoding
+  whole rule set instead of re-enumerating per rule, which is where the bake-off's
+  0.43× came from (measured, not shipped: as of 2026-10-08 production ran each rule
+  through `Compile.rule` and `sharedPass` had no production caller). Both moves
+  require SEEING the program, so the final encoding
   reaches them only by reifying to data first. This is the performance-side
   twin of "whole-tree operations are native only on data": normalisation,
   shared-subexpression hoisting and reordering are whole-tree operations that

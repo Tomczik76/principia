@@ -102,7 +102,14 @@ story in two or three sentences, the principle it evidences, where the full reco
   fixture, never a comment; a generator that cannot reach the interesting case makes
   every property it feeds vacuous — measure reach, don't assume it; mutation testing
   finds the unreachable regions without a human guessing first; false positives get
-  rationalized where false negatives get reported.*
+  rationalized where false negatives get reported.* Follow-up, paid 2026-09-14
+  (contrapunctus `b38a6ad6`): two of the contrary-motion fixtures this entry counted
+  could not fail. Each was silenced by a different atom (one voice held; the prior
+  interval was a fourth), so deleting `is(SameDirection)` from the parallels rule left
+  107/107 green until they were rebuilt (fixtures 18 → 21). The sweep could not see it
+  either: it mutates what each atom means, never which atoms a rule uses. → *silence is
+  overdetermined: a must-not-fire fixture certifies an exemption only if removing that
+  exemption ALONE turns it red; a mutation tool certifies only the layer it mutates.*
 - **Four dispatchers on one integer (2026-08-16/17).** A species-counterpoint engine
   exposed one entry point per species and no dispatcher, so all four callers — a JS
   facade, a WASM engine, the server scorer, a CLI — wrote the `species match` themselves,
@@ -154,17 +161,21 @@ story in two or three sentences, the principle it evidences, where the full reco
 - **The beats/voices duality.** One score held as a merged grid AND per-voice tracks,
   synced by patch logic; drift on irregular sub-beat onsets produced
   "clicked here, appeared there" bugs through several rounds of sync-helper fixes before
-  the architecture itself was indicted. → *one canonical representation.*
+  the architecture itself was indicted. → *one canonical representation.* Still unpaid
+  as of 2026-10-08: `StaffData` carried both `beats` and `voices`, and 8 open issues
+  named merged beats or tracks.
 - **Three crossings, three coats.** Stripe webhooks got an idempotency-ledger table;
-  Bedrock responses are persisted raw before parsing so a parse failure doesn't lose the
-  spend; the SES webhook is pinned to its topic ARN and fails closed. Discovered
+  the offline lesson-generation pipeline persists each Bedrock response raw before
+  parsing so a parse failure doesn't lose the spend (the live app only logs usage); the
+  SES webhook is pinned to its topic ARN and fails closed. Discovered
   independently; recognized later as one solution. → *ACID-island crossing discipline.*
 - **The rule-DSL bake-off (2026-08-14).** Design-it-twice executed as three BUILT spikes
   (initial GADT / tagless final / initial+staged-compile) over the same production rule
   slice, judged by measurement: all three encodings ran FASTER than the hand-written
   rule they modeled at the granularity that ships (compiled-initial 2.72 ms vs production
-  7.22 ms — the abstraction-costs-performance instinct falsified by a printed number; see
-  the per-rule-vs-per-rule-set entry below for the granularity that reverses it); the
+  7.22 ms, one rule, before the frame enrichment — the abstraction-costs-performance
+  instinct falsified by a printed number; see the per-rule-vs-per-rule-set entry below
+  for what the enrichment did to it); the
   tagless rules' structural interpreters existed only via reification into the initial
   ADT (proven as a passing test); the counterexample-generating interpreter was the
   workload that separated the encodings; and the derived description exposed shipped
@@ -177,9 +188,11 @@ story in two or three sentences, the principle it evidences, where the full reco
   across chromatic vocabulary and modulations. Notably, the check was *found* by the
   category-theory vocabulary (equivariance under a torsor action), not by any rule the
   canon already carried: the vocabulary occasionally sees a check the rules don't
-  prescribe. Two things made it statable and necessary: `Pitch` is kept a lawful torsor
-  over ℤ² (intervals act, differences exist, no privileged origin), so "transpose
-  everything" is well-defined across a score; and the engine is deliberately
+  prescribe. Two things made it statable and necessary: `Pitch` is a torsor over its
+  interval group (intervals act, differences exist, no privileged origin), so "transpose
+  everything" is well-defined across a score — the group is (ℤ/2³²)² because `Int`
+  wraps, free of rank 2 only over the musical range, as the type's own header has said
+  since 2026-08-20 (contrapunctus `e8f86ad3`); and the engine is deliberately
   MONOMORPHIC in pitch — analysis must read it — so the commutation square that
   parametricity donates for free to a polymorphic function is here *owed*, and a suite
   is what pays it. → *metamorphic properties; name the algebra and it hands you the
@@ -237,9 +250,19 @@ story in two or three sentences, the principle it evidences, where the full reco
   multiplicative monoid was DROPPED rather than rescued by a narrower generator — no call
   site wanted it, and a monoid whose `combineAll` lies is a false canonicity claim. The
   additive instance was kept with its real domain stated at the instance and at the type,
-  and the boundary pinned by a test that asserts the WRONG answer on purpose — a sum of 16
-  positive terms coming back smaller than its own first term — so a future overflow-safe
-  repair turns it red and forces the caveat's removal. → *name the canonical structure and
+  and the boundary was first pinned by a test asserting the WRONG answer on purpose — a
+  sum of 16 positive terms coming back smaller than its own first term — so that an
+  overflow-safe repair would turn it red. The repair came the next day and replaced the
+  pin before either reached main (contrapunctus `5c9a8663`, 2026-08-20): it redefined the
+  operations rather than guarding them. An operation that overflows is redone in BigInt
+  and reduced, so every result whose REDUCED form fits comes back exact even when the
+  intermediates did not (1/(3·2^60) + 1/(5·2^60) returns 1/(15·2^57)); only a result that
+  genuinely needs more than 64 bits throws, naming the value. BigInt throughout was
+  measured at 3.3-4.3x on `Pulse.align` against 1.0-1.2x for the fallback, so the
+  redefinition was also the cheap option. `RationalLawsSuite` now asserts 47# exact and
+  53# refusing. → *define errors out of existence, bounded by the contract: the silent
+  failure became no failure wherever an answer exists, and a loud one only where none
+  does;* *name the canonical structure and
   take the library's laws: a hand-written axiom list re-derives the axioms but inherits the
   author's generator blind spot; a refuted instance is the finding, not an obstacle to
   route around — and the failure it reports is a thread, not the whole defect; pin a known
@@ -315,16 +338,23 @@ story in two or three sentences, the principle it evidences, where the full reco
   and asserted equal to the historical prose — registry regen produced a zero diff).
   → *jurisdiction boundary; migrate implementations, not identities; founder energy is
   a legitimate design input.*
-- **Per-rule vs per-rule-set (2026-08-15).** A frame enrichment made single-rule DSL
-  timings worse than the hand-written baseline (1.52×) — but rules ship in sets, and
-  the set-level pass (one quantifier expansion amortized across four rules) ran 0.43×
-  the hand-written code, which re-enumerates the space per rule. The first measurement
-  was honest and still misleading: the unit of measurement must match the unit of
-  shipping. → *measurement rule, refined: print the number at the granularity that
-  ships.*
+- **Per-rule vs per-rule-set (2026-08-15; corrected 2026-10-08).** A frame enrichment
+  made single-rule DSL timings worse: the interpreted encoding ran 1.52× the
+  hand-written baseline and the compiled one 0.96×. The set-level pass (one quantifier
+  expansion amortized across four rules) ran 0.43× the hand-written code, which
+  re-enumerates the space per rule, and the bake-off adopted per-rule-set as the honest
+  unit "since rules ship in sets". This entry originally said the same. It was the
+  wrong unit: rules ship in sets, but production runs each rule through its own
+  compiled runner. Measured 2026-10-08: 27 `Compile.rule` runners and one
+  `interleavedPass` in `RuleDslRuntime`, and `Compile.sharedPass` with 0 production
+  callers (its 2 callers are a parity suite and the timing diagnostic). So what shipped
+  runs at about parity with the code it replaced, and the 0.43× is an available win, not
+  a delivered one. → *measurement rule, refined: print the number at the granularity
+  that ships, and find out what ships from the call sites, not from the data model.*
 - **`rhythm/Rational.scala`, `Pulse.Atom(NonEmptyList[A])`, `Pitch` as opaque `Long`.**
   Exact fractional time because doubles lose the algebraic relationships between
-  durations — exact while the answer FITS, as the 2026-08-19 entry above records: it is
+  durations — exact while the answer FITS, and refusing loudly when it does not, as the
+  2026-08-19 entry above records: it is
   `Long`/`Long`, so the bound is representability of the reduced result, not the shape of
   the inputs. Worth stating precisely, because the convenient shorthand is wrong: "safe on
   subdivision denominators" is false as written — 2^22 and 7^22 are both 2^a·3^b·5^c·7^d
@@ -404,6 +434,40 @@ story in two or three sentences, the principle it evidences, where the full reco
   `FuxSpeciesRule.byAbbreviationBySpecies` for weeks after a refactor renamed it —
   documentation anchors rot exactly like the hand-written wire twins the docs warn about.
   → *DRY-for-facts applies to docs; anchors need the same review as code.*
+- **The save that forgot what it sent (2026-10-06, contrapunctus #128).** "Is this score
+  saved?" compares two time points: what the last save SENT and what the editor shows now.
+  The editor stored one. When a save response arrived, `markClean` copied the live score
+  into the saved baseline, overwriting the fact of what had been sent. So any edit made
+  while the request was in flight was marked saved without ever being sent, and the same
+  step deleted its only durable copy, the IndexedDB draft. Live in production until the
+  fix. Recorded red first (`70af9a48`, `a40e61b6`), fixed in `4eeb687d`: a `ScoreSnapshot`
+  value of what was sent becomes the baseline, and dirty is derived as live ≠ sent. The
+  snapshot is a mapped type over the tracked fields, so a field added without being
+  carried fails to compile. Mutation "baseline = live instead of sent" turns it red.
+  → *ask what an update destroys: accrete the fact, project the current view; the
+  question needed both time points and the write kept one.*
+- **The snapshot that copied one level deep (2026-09-23, contrapunctus #18).** The undo
+  history took a staff snapshot with a hand-written cloning policy: spread each staff and
+  deep-copy four fields one level down. The nested beats and per-voice beats rode along
+  as live Immer drafts, so `placeTabNote`'s in-place `push` rewrote the undo entry it had
+  just pushed, and Undo after placing a tab note did nothing. Live in production. The
+  policy was correct at the level it was written for and evaporated one level of nesting
+  down. Recorded red by a model-based undo property (`2f21ca06`), fixed in `4a3d280e` by
+  holding values instead: committed state is deep-frozen, so sharing it is safe at any
+  depth, and "no writer has to remember to replace arrays"; there is no field list left
+  for a new field to fall out of. Mutation `detached = v => v` turns 12 tests red.
+  → *policies don't compose but values do: the cloning protocol was interface, and it
+  was the part that did not survive composition.*
+- **The step every caller had to remember (2026-09-25, contrapunctus #108).** Each
+  undoable store action pushed its own history entry: 17 sites wrote
+  `s._history.past.push(snapshotState(s)); s._history.future = []`. Pedal and clef-change
+  edits forgot, so one Undo reverted two gestures; others could push after writing or
+  push nothing-changed steps. Live in production. Recorded red (`d01ed8a8`), fixed in
+  `46084a7a`: a set-wrapper, `withHistory`, became the only writer and decides from the
+  diff whether a commit is a step (did a field in `HISTORY_FIELDS` change?). Callers make
+  no history decision at all. Mutant "never push" turns 35 tests red. → *pull complexity
+  downward: the module computes the decision every caller was making by hand, and the
+  caller that forgets stops existing.*
 
 ## Principia (this repo; the corpus reviewed against its own rules)
 
@@ -442,6 +506,19 @@ story in two or three sentences, the principle it evidences, where the full reco
   was measured; a fact restated inside a file that already cites its source rots in both
   copies at once; a law that is cited but not mechanized enforces nothing, and a closed
   budget that does not close stops promotions without stopping growth.*
+- **The anchor-accuracy pass (2026-10-08).** A whole-app review of Contrapunctus against
+  this corpus also checked every Contrapunctus claim in this ledger and the canon against
+  the code. Seven were stale or wrong, and all seven overstated: a 0.43× speed-up
+  credited to a pass with 0 production callers; "18 `.transaction.use` sites" where there
+  were 15, then and now; `Pitch` called a lawful ℤ²-torsor after the type's own header
+  had corrected it to (ℤ/2³²)²; a wrong-answer pin that never reached main; an exemption
+  counted as under test while its fixtures could not fail; a duplicated representation
+  described in the past tense while 8 open issues still named it; and a Bedrock
+  persist-before-parse credited to the live app when only an offline pipeline does it.
+  None understated: the fifth pass running. Corrected in place, each with its date.
+  Full record: contrapunctus `docs/design/principia-review-2026-10-08.md`.
+  → *anchors drift toward more reach, never less; re-measure them on the same schedule
+  as the code they cite.*
 
 ## IOUs — rules awaiting a paid-for anchor
 
@@ -455,18 +532,7 @@ bullets that ride on a source's own measurements.
   executed it as three built spikes; only "end up where a from-scratch build would land"
   is still owed).
 - Spend top-down authority on the least important decisions.
-- Define errors out of existence.
-- Pull complexity downward — the ABSORB half (a computed default the module decides).
-  Its exception clause is paid by the `persistence` prop (required parameter beats wrong
-  default); the absorbing half rides on Ousterhout alone.
 - Test your tests: generator and shrinker validity properties (Hughes).
-- Ask what an update destroys — accrete the fact, project the current view (Hickey, *The
-  Value of Values*). Awaiting a defect where a question needed a second time point and the
-  system had overwritten it. Held out of `core.md` for lack of both an anchor and a
-  displacement; the candidate line is drafted in `canon/value-of-values.md`.
-- Policies don't compose but values do — a locking or cloning protocol is interface, and
-  it is the part of the interface that evaporates under composition (Hickey). Awaiting a
-  defect paid at a composite, not at a leaf.
 - Fabrication cost as the precondition on preferring properties: a generator for a
   place-shaped API is mostly setup code that rebuilds a world, so the property certifies
   the fixture too (Hickey, sharpening Hughes). Awaiting a case where generator setup cost,

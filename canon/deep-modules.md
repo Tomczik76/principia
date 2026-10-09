@@ -69,4 +69,7 @@ restate the code.
 
 See `../case-studies.md` — Contrapunctus: the score-document hop chain (printed change
 amplification), the required non-defaulted `persistence` prop (the
-caller-owns-the-decision amendment).
+caller-owns-the-decision amendment), the step every caller had to remember (the absorb
+half: 17 history pushes became one writer that decides from the diff), and the laws that
+brought their own generator (define errors out of existence: `Rational` overflow
+redefined so every representable result is exact).

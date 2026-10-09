@@ -59,7 +59,9 @@ the function satisfies."
 (2026-08-15)**: the engine-wide commutation square (analysis ∘ transpose == transpose
 ∘ analysis) over the full chord-ID → labelling → refinements pipeline, diatonic and
 chromatic, including a modulating case — the owed, monomorphic analogue of this file's
-free square, statable because `Pitch` is kept a lawful ℤ²-torsor. See
+free square, statable because `Pitch` is a torsor over its interval group (that group is
+(ℤ/2³²)², since `Int` wraps, and free of rank 2 only over the musical range, as the
+type's header has said since 2026-08-20). See
 `how-to-specify-it.md` for the
 property-shape taxonomy this file feeds, and `constraints-liberate.md` for the same
 polymorphism-as-constraint trade priced at the API boundary.

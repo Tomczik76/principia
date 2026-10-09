@@ -15,7 +15,8 @@ there, and 2 are anchored in one half with the other half owed.
 | `case-studies.md` | The evidence ledger — paid-for defects, per project | On demand |
 | `agent-era.md` | Original position: how these rules reprice under coding agents | On demand |
 | `METHOD.md` | How sources get digested and admitted; the core budget rule | When adding sources |
-| `check-budget.sh` | Enforces the `core.md` ceiling — run it before committing a core change | Every core edit |
+| `check-budget.sh` | Enforces the always-on ceiling (`core.md` + any model-invocable skill's description) — run it before committing a core or skill change | Every core or skill edit |
+| `skills/` | Procedures invoked by name from any project; user-invoked, so they cost no context until called | On `/<skill>` |
 | `QUEUE.md` | Ranked mining list + rejected-as-redundant list | When adding sources |
 | `transcripts/` | Archived primary sources | Reference |
 
@@ -30,7 +31,12 @@ In any project's `CLAUDE.md`:
 Then keep the project's **local anchors** in its own CLAUDE.md — repo-specific constructs,
 file names, and defect stories that make the portable rules fire. De-anchored rules are
 weaker rules; the import supplies the procedures, the project supplies the triggers. When
-a project pays for a new lesson, contribute the anchor back to `case-studies.md`.
+a project pays for a new lesson, contribute the anchor back to `case-studies.md` —
+`/principia-contribute` runs that procedure from inside the paying project, once linked:
+
+```bash
+ln -s ~/Dev/principia/skills/principia-contribute ~/.claude/skills/principia-contribute
+```
 
 ## The two laws of this repo
 
